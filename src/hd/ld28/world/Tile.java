@@ -3,6 +3,7 @@ package hd.ld28.world;
 import hd.ld28.render.Texture;
 import hd.ld28.render.WorldRenderer;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,20 +20,21 @@ public class Tile
 	{
 		tiles = new ArrayList<Tile>();
 		
-		TILE_GRASS = new Tile().register(Texture.TILE_GRASS);
-		TILE_LEAVES = new TileWall().register(Texture.TILE_LEAVES);
-		TILE_WATER = new TileFluid().register(Texture.TILE_WATER);
-		TILE_ROCK = new TileRock().register(Texture.TILE_ROCK);
+		TILE_GRASS = new Tile().register(Texture.TILE_GRASS, new Color(0, 128, 0).getRGB());
+		TILE_LEAVES = new TileWall().register(Texture.TILE_LEAVES, new Color(0, 192, 0).getRGB());
+		TILE_WATER = new TileFluid().register(Texture.TILE_WATER, new Color(0, 0, 192).getRGB());
+		TILE_ROCK = new TileRock().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
 	}
 	
 	
 	
-	public int id, textureId;
+	public int id, textureId, mapcolor;
 	
-	public int register(int texture)
+	public int register(int texture, int color)
 	{
 		this.id = tiles.size();
 		this.textureId = texture;
+		this.mapcolor = color;
 		tiles.add(this);
 		return this.id;
 	}

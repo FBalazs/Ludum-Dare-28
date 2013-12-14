@@ -7,10 +7,15 @@ import hd.ld28.world.World;
 
 public class EntityPlayer extends Entity
 {
+	public int anim, animTime, danim;
+	
 	public EntityPlayer(World world, int x, int y)
 	{
 		super(world, x, y);
 		this.maxMoveTime = Game.instance.requestedUPS/5;
+		this.anim = 0;
+		this.animTime = 0;
+		this.danim = 1;
 	}
 	
 	@Override
@@ -39,6 +44,18 @@ public class EntityPlayer extends Entity
 			
 			if(this.x != this.nx || this.y != this.ny)
 				this.moveTime = this.maxMoveTime;
+		}
+		else
+		{
+			if(this.animTime < Game.instance.requestedUPS/8)
+				this.animTime++;
+			else
+			{
+				this.anim += danim;
+				if(this.anim == 0 || this.anim == 2)
+					this.danim *= -1;
+				this.animTime = 0;
+			}
 		}
 	}
 }

@@ -3,10 +3,13 @@ package hd.ld28.world;
 import hd.ld28.Game;
 import hd.ld28.entity.Entity;
 import hd.ld28.entity.EntityPlayer;
+import hd.ld28.render.RenderingHelper;
+import hd.ld28.render.Texture;
 import hd.ld28.render.WorldRenderer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +24,7 @@ public class World
 	
 	public Random random;
 	public WorldRenderer renderer;
+	public BufferedImage mapImage;
 	
 	public World()
 	{
@@ -133,6 +137,11 @@ public class World
 			if(this.tiles[x][y] == Tile.TILE_GRASS)
 				this.tiles[x][y] = Tile.TILE_ROCK;
 		}
+		
+		this.mapImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		for(int i = 0; i < 256; i++)
+			for(int j = 0; j < 256; j++)
+				this.mapImage.setRGB(i, j, this.getTileAt(i, j).mapcolor);
 	}
 	
 	public void update()
@@ -147,6 +156,6 @@ public class World
 		this.renderer = new WorldRenderer(g, this);
 		this.renderer.render(partialTick);
 		g.setColor(Color.white);
-		g.fillRect(Game.instance.applet.getWidth()/2-this.TILE_SIZE/2, Game.instance.applet.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE);
+		RenderingHelper.fillTexturedRect(g, Game.instance.applet.getWidth()/2-this.TILE_SIZE/2, Game.instance.applet.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER[this.player.anim]);
 	}
 }

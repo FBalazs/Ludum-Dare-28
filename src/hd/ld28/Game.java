@@ -61,8 +61,8 @@ public class Game extends Canvas implements Runnable
 	public void onMouseWheelMoved(int amount)
 	{
 		this.world.TILE_SIZE += amount;
-		if(this.world.TILE_SIZE < 4)
-			this.world.TILE_SIZE = 4;
+		if(this.world.TILE_SIZE < 16)
+			this.world.TILE_SIZE = 16;
 		if(this.world.TILE_SIZE > 64)
 			this.world.TILE_SIZE = 64;
 	}
@@ -81,6 +81,19 @@ public class Game extends Canvas implements Runnable
 		g.fillRect(0, 0, this.applet.getWidth(), this.applet.getHeight());
 		
 		this.world.render(g, this.partialTick);
+		int mx = this.world.player.x-64;
+		int my = this.world.player.y-64;
+		if(mx < 0)
+			mx = 0;
+		if(mx > 128)
+			mx = 128;
+		if(my < 0)
+			my = 0;
+		if(my > 128)
+			my = 128;
+		g.drawImage(this.world.mapImage, this.applet.getWidth()-128, this.applet.getHeight()-128, this.applet.getWidth(), this.applet.getHeight(), mx, my, mx+128, my+128, null);
+		g.setColor(Color.red);
+		g.fillRect(this.applet.getWidth()-128+this.world.player.x-mx-1, this.applet.getHeight()-128+this.world.player.y-my-1, 3, 3);
 		
 		if(this.isRunning)
 		{

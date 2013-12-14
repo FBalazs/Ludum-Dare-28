@@ -16,6 +16,7 @@ public class Texture
 					TILE_LEAVES,
 					TILE_WATER,
 					TILE_ROCK;
+	public static int[] ENTITY_PLAYER;
 	
 	public static void init()
 	{
@@ -25,6 +26,9 @@ public class Texture
 		TILE_LEAVES = loadTexture("textures/tiles/leaves.png");
 		TILE_WATER = loadTexture("textures/tiles/water.png");
 		TILE_ROCK = loadTexture("textures/tiles/rock.png");
+		ENTITY_PLAYER = new int[3];
+		for(int i = 0; i < 3; i++)
+			ENTITY_PLAYER[i] = loadTexture("textures/entities/player"+i+".png");
 	}
 	
 	public static int loadTexture(String path)
