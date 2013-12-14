@@ -23,7 +23,7 @@ public class Entity
 	{
 		if(this.moveTime > 0)
 			this.moveTime--;
-		else if(this.x != this.nx || this.y != this.ny)
+		else
 		{
 			this.x = this.nx;
 			this.y = this.ny;
@@ -32,6 +32,7 @@ public class Entity
 	
 	public void render(WorldRenderer renderer, float partialTick)
 	{
-		
+		//renderer.setColor(Color.white);
+		//renderer.fillRect(this.x*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.y*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.world.TILE_SIZE, this.world.TILE_SIZE);
 	}
 }

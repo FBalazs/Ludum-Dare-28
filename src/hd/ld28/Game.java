@@ -18,6 +18,7 @@ public class Game extends Canvas implements Runnable
 	
 	
 	public GameApplet applet;
+	public InputHandler input;
 	public Random random;
 	public World world;
 	public boolean isRunning;
@@ -32,6 +33,7 @@ public class Game extends Canvas implements Runnable
 	{
 		instance = this;
 		this.applet = applet;
+		this.input = new InputHandler(this);
 		this.random = new Random(System.currentTimeMillis());
 	}
 	
@@ -40,6 +42,10 @@ public class Game extends Canvas implements Runnable
 		Texture.init();
 		Tile.init();
 		this.world = new World();
+		this.addKeyListener(this.input);
+		this.addMouseListener(this.input);
+		this.addMouseWheelListener(this.input);
+		this.addMouseMotionListener(this.input);
 	}
 	
 	public void onKeyTyped(char c, int i)
@@ -54,7 +60,11 @@ public class Game extends Canvas implements Runnable
 	
 	public void onMouseWheelMoved(int amount)
 	{
-		
+		this.world.TILE_SIZE += amount;
+		if(this.world.TILE_SIZE < 4)
+			this.world.TILE_SIZE = 4;
+		if(this.world.TILE_SIZE > 64)
+			this.world.TILE_SIZE = 64;
 	}
 	
 	public void update()

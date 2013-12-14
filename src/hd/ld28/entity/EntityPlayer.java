@@ -20,25 +20,25 @@ public class EntityPlayer extends Entity
 		
 		if(this.moveTime == 0)
 		{
-			if(Game.instance.applet.isKeyDown(KeyEvent.VK_W) && this.y > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable())
+			this.x = this.nx;
+			this.y = this.ny;
+			
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_W) && this.y > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
 				this.ny--;
-			else if(Game.instance.applet.isKeyDown(KeyEvent.VK_S) && this.y < 255 && this.world.getTileAt(this.x, this.y+1).isWalkable())
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_S) && this.y < 255 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
 				this.ny++;
-			else if(Game.instance.applet.isKeyDown(KeyEvent.VK_A) && this.x > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable())
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_A) && this.x > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
 				this.nx--;
-			else if(Game.instance.applet.isKeyDown(KeyEvent.VK_D) && this.x < 255 && this.world.getTileAt(this.x+1, this.y).isWalkable())
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_D) && this.x < 255 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
 				this.nx++;
 			
-			/*System.out.println(Game.instance.applet.isKeyDown(KeyEvent.VK_W)+" "
-							+Game.instance.applet.isKeyDown(KeyEvent.VK_S)+" "
-							+Game.instance.applet.isKeyDown(KeyEvent.VK_A)+" "
-							+Game.instance.applet.isKeyDown(KeyEvent.VK_D));*/
+			/*System.out.println(Game.instance.input.isKeyDown(KeyEvent.VK_W)+" "
+							+Game.instance.input.isKeyDown(KeyEvent.VK_S)+" "
+							+Game.instance.input.isKeyDown(KeyEvent.VK_A)+" "
+							+Game.instance.input.isKeyDown(KeyEvent.VK_D));*/
 			
 			if(this.x != this.nx || this.y != this.ny)
-			{
 				this.moveTime = this.maxMoveTime;
-				System.out.println(this.nx+" "+this.ny);
-			}
 		}
 	}
 }

@@ -5,6 +5,7 @@ import hd.ld28.entity.Entity;
 import hd.ld28.entity.EntityPlayer;
 import hd.ld28.render.WorldRenderer;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,15 @@ public class World
 	{
 		this.tiles = new int[256][256];
 		this.entities = new ArrayList<Entity>();
-		this.player = new EntityPlayer(this, 127, 127);
 		this.random = Game.instance.random;
 		this.generate();
+		int x = 127, y = 127;
+		while(!Tile.tiles.get(this.tiles[x][y]).isWalkable())
+		{
+			x = this.random.nextInt(256);
+			y = this.random.nextInt(256);
+		}
+		this.player = new EntityPlayer(this, x, y);
 	}
 	
 	public Tile getTileAt(int x, int y)
@@ -74,13 +81,50 @@ public class World
 		}
 	}
 	
+	public void generateLakes()
+	{
+		for(int l = 0; l < 32; l++)
+		{
+			int x = this.random.nextInt(256);
+			int y = this.random.nextInt(256);
+			int w = this.random.nextInt(16);
+			int h = this.random.nextInt(16);
+			
+			if(w > 0 && h > 0 && x+w < 256 && y+h < 256)
+			{
+				for(int i = x; i < x+w; i++)
+					for(int j = y; j < y+h; j++)
+						this.tiles[i][j] = Tile.TILE_WATER;
+			}
+		}
+	}
+	
 	public void generate()
 	{
 		for(int i = 0; i < 256; i++)
 			for(int j = 0; j < 256; j++)
-				this.tiles[i][j] = Tile.TILE_LEAVES;
+				this.tiles[i][j] = this.random.nextInt(2);
+				//this.tiles[i][j] = Tile.TILE_LEAVES;
 		
-		this.generateBSP(1, 1, 254, 254);
+		for(int a = 0; a < 5; a++)
+		{
+			int[][] ptiles = this.tiles;
+			for(int i = 0; i < 256; i++)
+				for(int j = 0; j < 256; j++)
+				{
+					int s = 0;
+					for(int ni = i-1; ni <= i+1; ni++)
+						for(int nj = j-1; nj <= j+1; nj++)
+							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && ptiles[ni][nj] == 1)
+								s++;
+					this.tiles[i][j] = s > 4 ? 1 : 0;
+				}
+		}
+		
+		//this.generateBSP(1, 1, 254, 254);
+		
+		
+		this.generateLakes();
 		
 		for(int i = 0; i < 1024; i++)
 		{
@@ -102,5 +146,7 @@ public class World
 	{
 		this.renderer = new WorldRenderer(g, this);
 		this.renderer.render(partialTick);
+		g.setColor(Color.white);
+		g.fillRect(Game.instance.applet.getWidth()/2-this.TILE_SIZE/2, Game.instance.applet.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE);
 	}
 }
