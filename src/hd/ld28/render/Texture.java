@@ -12,11 +12,19 @@ public class Texture
 {
 	private static List<BufferedImage> textures;
 	
+	public static int TILE_GRASS,
+					TILE_LEAVES,
+					TILE_WATER,
+					TILE_ROCK;
+	
 	public static void init()
 	{
 		textures = new ArrayList<BufferedImage>();
 		
-		
+		TILE_GRASS = loadTexture("textures/tiles/grass.png");
+		TILE_LEAVES = loadTexture("textures/tiles/leaves.png");
+		TILE_WATER = loadTexture("textures/tiles/water.png");
+		TILE_ROCK = loadTexture("textures/tiles/rock.png");
 	}
 	
 	public static int loadTexture(String path)
