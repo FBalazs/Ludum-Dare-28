@@ -3,7 +3,7 @@ package hd.ld28.world;
 import hd.ld28.render.Texture;
 import hd.ld28.render.WorldRenderer;
 
-public class TileRock extends TileWall
+public class TileObject extends TileWall
 {
 	@Override
 	public void renderAt(WorldRenderer renderer, World world, float partialTick, int x, int y)

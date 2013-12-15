@@ -1,5 +1,7 @@
 package hd.ld28.entity;
 
+import java.awt.Color;
+
 import hd.ld28.render.WorldRenderer;
 import hd.ld28.world.World;
 
@@ -32,7 +34,7 @@ public class Entity
 	
 	public void render(WorldRenderer renderer, float partialTick)
 	{
-		//renderer.setColor(Color.white);
-		//renderer.fillRect(this.x*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.y*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.world.TILE_SIZE, this.world.TILE_SIZE);
+		renderer.setColor(Color.white);
+		renderer.fillRect(this.x*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.y*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.world.TILE_SIZE, this.world.TILE_SIZE);
 	}
 }

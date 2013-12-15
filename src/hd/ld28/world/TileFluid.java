@@ -3,9 +3,9 @@ package hd.ld28.world;
 public class TileFluid extends Tile
 {
 	@Override
-	public int getWalkSpeed()
+	public float getWalkSpeed()
 	{
-		return 8;
+		return 0.66F;
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package hd.ld28.render;
 
 import hd.ld28.Game;
+import hd.ld28.entity.Entity;
 import hd.ld28.world.Tile;
 import hd.ld28.world.World;
 
@@ -22,8 +23,9 @@ public class WorldRenderer
 	
 	public void render(float partialTick)
 	{
-		this.px = this.world.player.x*this.world.TILE_SIZE+(this.world.player.nx-this.world.player.x)*(this.world.player.maxMoveTime-this.world.player.moveTime)*this.world.TILE_SIZE/this.world.player.maxMoveTime-Game.instance.applet.getWidth()/2;
-		this.py = this.world.player.y*this.world.TILE_SIZE+(this.world.player.ny-this.world.player.y)*(this.world.player.maxMoveTime-this.world.player.moveTime)*this.world.TILE_SIZE/this.world.player.maxMoveTime-Game.instance.applet.getHeight()/2;
+		int mt = (int)(this.world.player.maxMoveTime/this.world.getTileAt(this.world.player.x, this.world.player.y).getWalkSpeed());
+		this.px = this.world.player.x*this.world.TILE_SIZE+(this.world.player.nx-this.world.player.x)*(mt-this.world.player.moveTime)*this.world.TILE_SIZE/mt-Game.instance.applet.getWidth()/2;
+		this.py = this.world.player.y*this.world.TILE_SIZE+(this.world.player.ny-this.world.player.y)*(mt-this.world.player.moveTime)*this.world.TILE_SIZE/mt-Game.instance.applet.getHeight()/2;
 		
 		int rx = Game.instance.applet.getWidth()/this.world.TILE_SIZE/2;
 		int ry = Game.instance.applet.getHeight()/this.world.TILE_SIZE/2;
@@ -31,6 +33,10 @@ public class WorldRenderer
 			for(int j = this.world.player.y-ry-1; j <= this.world.player.y+ry+1; j++)
 				if(0 <= i && i < 256 && 0 <= j && j < 256)
 					Tile.tiles.get(this.world.getTileIdAt(i, j)).renderAt(this, this.world, partialTick, i, j);
+		
+		for(Entity entity : this.world.entities)
+			if(Math.abs(entity.x-this.world.player.x)+Math.abs(entity.y-this.world.player.y) < rx+ry)
+				entity.render(this, partialTick);
 	}
 	
 	public void setColor(Color c)

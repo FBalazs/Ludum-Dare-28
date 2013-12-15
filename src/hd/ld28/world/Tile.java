@@ -13,6 +13,7 @@ public class Tile
 	
 	public static int TILE_GRASS,
 					TILE_LEAVES,
+					TILE_TREE,
 					TILE_WATER,
 					TILE_ROCK;
 	
@@ -22,8 +23,9 @@ public class Tile
 		
 		TILE_GRASS = new Tile().register(Texture.TILE_GRASS, new Color(0, 128, 0).getRGB());
 		TILE_LEAVES = new TileWall().register(Texture.TILE_LEAVES, new Color(0, 192, 0).getRGB());
+		TILE_TREE = new TileObject().register(Texture.TILE_TREE, new Color(0, 80, 0).getRGB());
 		TILE_WATER = new TileFluid().register(Texture.TILE_WATER, new Color(0, 0, 192).getRGB());
-		TILE_ROCK = new TileRock().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
+		TILE_ROCK = new TileObject().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
 	}
 	
 	
@@ -44,9 +46,9 @@ public class Tile
 		renderer.fillTexturedRect(x*world.TILE_SIZE-world.TILE_SIZE/2, y*world.TILE_SIZE-world.TILE_SIZE/2, world.TILE_SIZE, world.TILE_SIZE, this.textureId);
 	}
 	
-	public int getWalkSpeed()
+	public float getWalkSpeed()
 	{
-		return 12;
+		return 1F;
 	}
 	
 	public boolean isWalkable()

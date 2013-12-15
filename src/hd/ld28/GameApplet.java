@@ -17,7 +17,7 @@ public class GameApplet extends JApplet
 		this.setSize(800, 600);
 		
 		this.game = new Game(this);
-		this.game.init();
+		//this.game.init();
 		this.add(this.game);
 	}
 	

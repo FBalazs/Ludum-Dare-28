@@ -2,6 +2,7 @@ package hd.ld28.world;
 
 import hd.ld28.Game;
 import hd.ld28.entity.Entity;
+import hd.ld28.entity.EntityGift;
 import hd.ld28.entity.EntityPlayer;
 import hd.ld28.render.RenderingHelper;
 import hd.ld28.render.Texture;
@@ -39,6 +40,19 @@ public class World
 			y = this.random.nextInt(256);
 		}
 		this.player = new EntityPlayer(this, x, y);
+		for(int i = 0; i < 32; i++)
+		{
+			x = this.random.nextInt(256);
+			y = this.random.nextInt(256);
+			int t = 0;
+			while(this.tiles[x][y] != Tile.TILE_GRASS && t < 16)
+			{
+				x = this.random.nextInt(256);
+				y = this.random.nextInt(256);
+				t++;
+			}
+			this.entities.add(new EntityGift(this, x, y));
+		}
 	}
 	
 	public Tile getTileAt(int x, int y)
@@ -119,12 +133,24 @@ public class World
 					int s = 0;
 					for(int ni = i-1; ni <= i+1; ni++)
 						for(int nj = j-1; nj <= j+1; nj++)
-							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && ptiles[ni][nj] == 1)
+							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && ptiles[ni][nj] == Tile.TILE_LEAVES)
 								s++;
-					this.tiles[i][j] = s > 4 ? 1 : 0;
+					this.tiles[i][j] = s > 4 ? Tile.TILE_LEAVES : Tile.TILE_GRASS;
 				}
 		}
 		
+		for(int i = 0; i < 256; i++)
+			for(int j = 0; j < 256; j++)
+				if(this.tiles[i][j] == Tile.TILE_LEAVES)
+				{
+					int s = 0;
+					for(int ni = i-1; ni <= i+1; ni++)
+						for(int nj = j-1; nj <= j+1; nj++)
+							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && (this.tiles[ni][nj] == Tile.TILE_LEAVES || this.tiles[ni][nj] == Tile.TILE_TREE))
+								s++;
+					if(this.random.nextInt(s)/2 != 0)
+						this.tiles[i][j] = Tile.TILE_TREE;
+				}
 		//this.generateBSP(1, 1, 254, 254);
 		
 		
