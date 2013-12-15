@@ -1,5 +1,10 @@
 package hd.ld28.gui;
 
+import hd.ld28.render.RenderingHelper;
+import hd.ld28.render.Texture;
+
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class GuiButton extends Gui
@@ -47,7 +52,10 @@ public class GuiButton extends Gui
 	@Override
 	public void render(Graphics g)
 	{
-		// TODO
+		g.setColor(Color.white);
+		RenderingHelper.fillTexturedRect(g, this.x, this.y, this.width, this.height, Texture.GUI_BUTTON[this.state]);
+		g.setFont(new Font("SansSerif", Font.BOLD, 16));
+		RenderingHelper.drawCenteredString(g, this.x+this.width/2, this.y+this.height/2, this.text);
 		super.render(g);
 	}
 }

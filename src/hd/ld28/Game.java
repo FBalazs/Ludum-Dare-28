@@ -2,6 +2,7 @@ package hd.ld28;
 
 import hd.ld28.entity.Entity;
 import hd.ld28.gui.Gui;
+import hd.ld28.gui.GuiMainMenu;
 import hd.ld28.render.Texture;
 import hd.ld28.world.Tile;
 import hd.ld28.world.World;
@@ -10,6 +11,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable
@@ -46,7 +48,8 @@ public class Game extends Canvas implements Runnable
 		if(this.currentGui != null)
 			this.currentGui.close();
 		this.currentGui = gui;
-		this.currentGui.init();
+		if(this.currentGui != null)
+			this.currentGui.init();
 	}
 	
 	public void drawProgress(int percent, String msg)
@@ -83,12 +86,15 @@ public class Game extends Canvas implements Runnable
 		this.addMouseListener(this.input);
 		this.addMouseWheelListener(this.input);
 		this.addMouseMotionListener(this.input);
+		this.setCurrentGui(new GuiMainMenu(null, 0, 0, this.getWidth(), this.getHeight()));
 	}
 	
 	public void onKeyTyped(char c, int i)
 	{
 		if(this.currentGui != null)
 			this.currentGui.onKeyTyped(c, i);
+		else if(i == KeyEvent.VK_ESCAPE || (int)c == KeyEvent.VK_ESCAPE)
+			this.setCurrentGui(new GuiMainMenu(null, 0, 0, this.getWidth(), this.getHeight()));
 	}
 	
 	public void onMouseClicked(int x, int y, int button)
@@ -145,6 +151,9 @@ public class Game extends Canvas implements Runnable
 				g.fillRect(this.getWidth()-128+entity.x-mx, this.getHeight()-128+entity.y-my, 1, 1);
 		g.setColor(Color.red);
 		g.fillRect(this.getWidth()-128+this.world.player.x-mx-1, this.getHeight()-128+this.world.player.y-my-1, 3, 3);
+		
+		if(this.currentGui != null)
+			this.currentGui.render(g);
 		
 		if(this.isRunning)
 		{

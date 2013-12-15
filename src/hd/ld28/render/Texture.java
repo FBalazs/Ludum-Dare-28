@@ -3,14 +3,15 @@ package hd.ld28.render;
 import hd.ld28.Game;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 public class Texture
 {
-	private static List<Image> textures;
+	private static List<BufferedImage> textures;
 	
 	public static int BLANK,
 					TILE_GRASS,
@@ -20,11 +21,12 @@ public class Texture
 					TILE_ROCK,
 					ENTITY_GIFT,
 					ENTITY_PLAYER_GIFT;
-	public static int[] ENTITY_PLAYER;
+	public static int[] ENTITY_PLAYER,
+						GUI_BUTTON;
 	
 	public static void init()
 	{
-		textures = new ArrayList<Image>();
+		textures = new ArrayList<BufferedImage>();
 		
 		BLANK = 0;
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
@@ -33,6 +35,7 @@ public class Texture
 		img.setRGB(0, 1, Color.yellow.getRGB());
 		img.setRGB(1, 1, Color.black.getRGB());
 		textures.add(img);
+		
 		TILE_GRASS = loadTexture("textures/tiles/grass.png");
 		TILE_LEAVES = loadTexture("textures/tiles/leaves.png");
 		TILE_TREE = loadTexture("textures/tiles/tree.png");
@@ -40,16 +43,21 @@ public class Texture
 		TILE_ROCK = loadTexture("textures/tiles/rock.png");
 		ENTITY_GIFT = loadTexture("textures/entities/gift.png");
 		ENTITY_PLAYER_GIFT = loadTexture("textures/entities/playerGift.png");
+		
 		ENTITY_PLAYER = new int[3];
 		for(int i = 0; i < 3; i++)
 			ENTITY_PLAYER[i] = loadTexture("textures/entities/player"+i+".png");
+		
+		GUI_BUTTON = new int[3];
+		for(int i = 0; i < 3; i++)
+			GUI_BUTTON[i] = loadTexture("textures/gui/button"+i+".png");
 	}
 	
 	public static int loadTexture(String path)
 	{
 		try
 		{
-			Image img = Game.instance.applet.getImage(Game.instance.applet.getCodeBase(), path);
+			BufferedImage img = ImageIO.read(Game.instance.applet.getClass().getClassLoader().getResource(path));
 			textures.add(img);
 			return textures.size()-1;
 		}
@@ -60,7 +68,7 @@ public class Texture
 		}
 	}
 	
-	public static Image getTextureById(int id)
+	public static BufferedImage getTextureById(int id)
 	{
 		return textures.get(id);
 	}
