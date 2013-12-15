@@ -1,4 +1,5 @@
-/bin
+/bin/hd
+/bin/java.policy.applet
 .classpath
 .project
 .settings
