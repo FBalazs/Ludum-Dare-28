@@ -1,16 +1,15 @@
 package hd.ld28.gui;
 
 import hd.ld28.Game;
+import hd.ld28.render.RenderingHelper;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
 public class GuiMainMenu extends Gui
 {
-	public GuiButton btnResume,
-					btnNewGame,
-					btnControls,
-					btnAbout,
+	public GuiButton btnNewGame,
+					btnInstruction,
+					btnCredit,
 					btnExit;
 	
 	public GuiMainMenu(Gui parent, int x, int y, int width, int height)
@@ -22,9 +21,16 @@ public class GuiMainMenu extends Gui
 	public void init()
 	{
 		this.isFocused = true;
-		this.btnResume = new GuiButton(this, this.width/2-86, this.height/2-23, 2*86, 2*23, "Resume Game");
-		this.btnResume.isFocused = true;
-		
+
+		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23, 86*2, 23*2, "Play");
+		this.btnNewGame.isFocused = true;
+
+		this.btnInstruction = new GuiButton(this, this.width/2-86, this.height/2-23 + 60, 86*2, 23*2, "Instructions");
+
+		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*2, 86*2, 23*2, "Credit");
+
+		this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*3, 86*2, 23*2, "Exit");
+
 		super.init();
 	}
 	
@@ -33,7 +39,7 @@ public class GuiMainMenu extends Gui
 	{
 		super.update(mouseX, mouseY, pressed);
 		
-		if(this.btnResume.wasClicked())
+		if(this.btnNewGame.wasClicked())
 			Game.instance.setCurrentGui(null);
 	}
 	
@@ -42,6 +48,9 @@ public class GuiMainMenu extends Gui
 	{
 		g.setColor(new Color(0, 0, 0, 128));
 		g.fillRect(0, 0, this.width, this.height);
+		g.setColor(new Color(0xd80303));
+		g.setFont(new Font("SansSerif", Font.BOLD, 50));
+		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 100, "Present Delivery");
 		super.render(g);
 	}
 }
