@@ -10,6 +10,7 @@ public class Entity
 	public World world;
 	public int x, y, nx, ny;
 	public int moveTime, maxMoveTime;
+	public boolean shouldRemove;
 	
 	public Entity(World world, int x, int y)
 	{
@@ -19,6 +20,7 @@ public class Entity
 		this.nx = x;
 		this.ny = y;
 		this.moveTime = 0;
+		this.shouldRemove = false;
 	}
 	
 	public void update()

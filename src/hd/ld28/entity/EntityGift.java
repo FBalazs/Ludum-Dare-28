@@ -12,6 +12,16 @@ public class EntityGift extends Entity
 	}
 	
 	@Override
+	public void update()
+	{
+		if(this.world.player.nx == this.x && this.world.player.ny == this.y && !this.world.player.hasGift)
+		{
+			this.world.player.hasGift = true;
+			this.shouldRemove = true;
+		}
+	}
+	
+	@Override
 	public void render(WorldRenderer renderer, float partialTick)
 	{
 		renderer.fillTexturedRect(this.x*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.y*this.world.TILE_SIZE-this.world.TILE_SIZE/2, this.world.TILE_SIZE, this.world.TILE_SIZE, Texture.ENTITY_GIFT);

@@ -45,7 +45,7 @@ public class World
 			x = this.random.nextInt(256);
 			y = this.random.nextInt(256);
 			int t = 0;
-			while(this.tiles[x][y] != Tile.TILE_GRASS && t < 16)
+			while(this.tiles[x][y] != Tile.GRASS && t < 16)
 			{
 				x = this.random.nextInt(256);
 				y = this.random.nextInt(256);
@@ -95,7 +95,7 @@ public class World
 			//System.out.println("BSP x:"+x+" y:"+y+" w:"+width+" h:"+height);
 			for(int i = x; i < x+width; i++)
 				for(int j = y; j < y+height; j++)
-					this.tiles[i][j] = Tile.TILE_GRASS;
+					this.tiles[i][j] = Tile.GRASS;
 		}
 	}
 	
@@ -112,7 +112,7 @@ public class World
 			{
 				for(int i = x; i < x+w; i++)
 					for(int j = y; j < y+h; j++)
-						this.tiles[i][j] = Tile.TILE_WATER;
+						this.tiles[i][j] = Tile.WATER;
 			}
 		}
 	}
@@ -122,8 +122,7 @@ public class World
 		for(int i = 0; i < 256; i++)
 			for(int j = 0; j < 256; j++)
 				this.tiles[i][j] = this.random.nextInt(2);
-				//this.tiles[i][j] = Tile.TILE_LEAVES;
-		
+				
 		for(int a = 0; a < 5; a++)
 		{
 			int[][] ptiles = this.tiles;
@@ -133,26 +132,24 @@ public class World
 					int s = 0;
 					for(int ni = i-1; ni <= i+1; ni++)
 						for(int nj = j-1; nj <= j+1; nj++)
-							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && ptiles[ni][nj] == Tile.TILE_LEAVES)
+							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && ptiles[ni][nj] == Tile.LEAVES)
 								s++;
-					this.tiles[i][j] = s > 4 ? Tile.TILE_LEAVES : Tile.TILE_GRASS;
+					this.tiles[i][j] = s > 4 ? Tile.LEAVES : Tile.GRASS;
 				}
 		}
 		
 		for(int i = 0; i < 256; i++)
 			for(int j = 0; j < 256; j++)
-				if(this.tiles[i][j] == Tile.TILE_LEAVES)
+				if(this.tiles[i][j] == Tile.LEAVES)
 				{
 					int s = 0;
 					for(int ni = i-1; ni <= i+1; ni++)
 						for(int nj = j-1; nj <= j+1; nj++)
-							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && (this.tiles[ni][nj] == Tile.TILE_LEAVES || this.tiles[ni][nj] == Tile.TILE_TREE))
+							if(0 <= ni && ni < 256 && 0 <= nj && nj < 256 && (this.tiles[ni][nj] == Tile.LEAVES || this.tiles[ni][nj] == Tile.TREE))
 								s++;
 					if(this.random.nextInt(s)/2 != 0)
-						this.tiles[i][j] = Tile.TILE_TREE;
+						this.tiles[i][j] = Tile.TREE;
 				}
-		//this.generateBSP(1, 1, 254, 254);
-		
 		
 		this.generateLakes();
 		
@@ -160,8 +157,8 @@ public class World
 		{
 			int x = this.random.nextInt(256);
 			int y = this.random.nextInt(256);
-			if(this.tiles[x][y] == Tile.TILE_GRASS)
-				this.tiles[x][y] = Tile.TILE_ROCK;
+			if(this.tiles[x][y] == Tile.GRASS)
+				this.tiles[x][y] = Tile.ROCK;
 		}
 		
 		this.mapImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
@@ -175,6 +172,12 @@ public class World
 		for(Entity entity : this.entities)
 			entity.update();
 		this.player.update();
+		for(int i = 0; i < this.entities.size(); i++)
+			if(this.entities.get(i).shouldRemove)
+			{
+				this.entities.remove(i);
+				i--;
+			}
 	}
 	
 	public void render(Graphics g, float partialTick)
@@ -182,6 +185,8 @@ public class World
 		this.renderer = new WorldRenderer(g, this);
 		this.renderer.render(partialTick);
 		g.setColor(Color.white);
-		RenderingHelper.fillTexturedRect(g, Game.instance.applet.getWidth()/2-this.TILE_SIZE/2, Game.instance.applet.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER[this.player.anim]);
+		if(this.player.hasGift)
+			RenderingHelper.fillTexturedRect(g, Game.instance.getWidth()/2-this.TILE_SIZE/2-Direction.getDeltaX(this.player.dir)*this.TILE_SIZE/3, Game.instance.getHeight()/2-this.TILE_SIZE/2-Direction.getDeltaY(this.player.dir)*this.TILE_SIZE/3, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER_GIFT);
+		RenderingHelper.fillTexturedRect(g, Game.instance.getWidth()/2-this.TILE_SIZE/2, Game.instance.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER[this.player.anim]);
 	}
 }

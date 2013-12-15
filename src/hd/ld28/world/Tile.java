@@ -11,21 +11,21 @@ public class Tile
 {
 	public static List<Tile> tiles;
 	
-	public static int TILE_GRASS,
-					TILE_LEAVES,
-					TILE_TREE,
-					TILE_WATER,
-					TILE_ROCK;
+	public static int GRASS,
+					LEAVES,
+					TREE,
+					WATER,
+					ROCK;
 	
 	public static void init()
 	{
 		tiles = new ArrayList<Tile>();
 		
-		TILE_GRASS = new Tile().register(Texture.TILE_GRASS, new Color(0, 128, 0).getRGB());
-		TILE_LEAVES = new TileWall().register(Texture.TILE_LEAVES, new Color(0, 192, 0).getRGB());
-		TILE_TREE = new TileObject().register(Texture.TILE_TREE, new Color(0, 80, 0).getRGB());
-		TILE_WATER = new TileFluid().register(Texture.TILE_WATER, new Color(0, 0, 192).getRGB());
-		TILE_ROCK = new TileObject().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
+		GRASS = new Tile().register(Texture.TILE_GRASS, new Color(0, 128, 0).getRGB());
+		LEAVES = new TileWall().register(Texture.TILE_LEAVES, new Color(0, 192, 0).getRGB());
+		TREE = new TileObject().register(Texture.TILE_TREE, new Color(0, 80, 0).getRGB());
+		WATER = new TileFluid().register(Texture.TILE_WATER, new Color(0, 0, 192).getRGB());
+		ROCK = new TileObject().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
 	}
 	
 	

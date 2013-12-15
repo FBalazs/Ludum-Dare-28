@@ -18,7 +18,8 @@ public class Texture
 					TILE_TREE,
 					TILE_WATER,
 					TILE_ROCK,
-					ENTITY_GIFT;
+					ENTITY_GIFT,
+					ENTITY_PLAYER_GIFT;
 	public static int[] ENTITY_PLAYER;
 	
 	public static void init()
@@ -38,6 +39,7 @@ public class Texture
 		TILE_WATER = loadTexture("textures/tiles/water.png");
 		TILE_ROCK = loadTexture("textures/tiles/rock.png");
 		ENTITY_GIFT = loadTexture("textures/entities/gift.png");
+		ENTITY_PLAYER_GIFT = loadTexture("textures/entities/playerGift.png");
 		ENTITY_PLAYER = new int[3];
 		for(int i = 0; i < 3; i++)
 			ENTITY_PLAYER[i] = loadTexture("textures/entities/player"+i+".png");

@@ -3,11 +3,13 @@ package hd.ld28.entity;
 import java.awt.event.KeyEvent;
 
 import hd.ld28.Game;
+import hd.ld28.world.Direction;
 import hd.ld28.world.World;
 
 public class EntityPlayer extends Entity
 {
-	public int anim, animTime, danim;
+	public int anim, animTime, danim, dir;
+	public boolean hasGift;
 	
 	public EntityPlayer(World world, int x, int y)
 	{
@@ -16,6 +18,8 @@ public class EntityPlayer extends Entity
 		this.anim = 0;
 		this.animTime = 0;
 		this.danim = 1;
+		this.dir = Direction.UP;
+		this.hasGift = false;
 	}
 	
 	@Override
@@ -43,7 +47,10 @@ public class EntityPlayer extends Entity
 							+Game.instance.input.isKeyDown(KeyEvent.VK_D));*/
 			
 			if(this.x != this.nx || this.y != this.ny)
+			{
+				this.dir = Direction.getDirFromDelta(this.nx-this.x, this.ny-this.y);
 				this.moveTime = (int)(this.maxMoveTime/this.world.getTileAt(this.x, this.y).getWalkSpeed());
+			}
 		}
 		else
 		{

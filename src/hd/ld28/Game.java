@@ -1,6 +1,7 @@
 package hd.ld28;
 
 import hd.ld28.entity.Entity;
+import hd.ld28.gui.Gui;
 import hd.ld28.render.Texture;
 import hd.ld28.world.Tile;
 import hd.ld28.world.World;
@@ -24,6 +25,7 @@ public class Game extends Canvas implements Runnable
 	public Random random;
 	public World world;
 	public boolean isRunning;
+	public Gui currentGui;
 	
 	public final int requestedUPS = 50;
 	public float partialTick;
@@ -37,6 +39,14 @@ public class Game extends Canvas implements Runnable
 		this.applet = applet;
 		this.input = new InputHandler(this);
 		this.random = new Random(System.currentTimeMillis());
+	}
+	
+	public void setCurrentGui(Gui gui)
+	{
+		if(this.currentGui != null)
+			this.currentGui.close();
+		this.currentGui = gui;
+		this.currentGui.init();
 	}
 	
 	public void drawProgress(int percent, String msg)
@@ -77,26 +87,36 @@ public class Game extends Canvas implements Runnable
 	
 	public void onKeyTyped(char c, int i)
 	{
-		
+		if(this.currentGui != null)
+			this.currentGui.onKeyTyped(c, i);
 	}
 	
 	public void onMouseClicked(int x, int y, int button)
 	{
-		
+		if(this.currentGui != null)
+			this.currentGui.onMouseClicked(x, y, button);
 	}
 	
 	public void onMouseWheelMoved(int amount)
 	{
-		this.world.TILE_SIZE += amount;
-		if(this.world.TILE_SIZE < 16)
-			this.world.TILE_SIZE = 16;
-		if(this.world.TILE_SIZE > 64)
-			this.world.TILE_SIZE = 64;
+		if(this.currentGui != null)
+			this.currentGui.onMouseWheelMoved(amount);
+		else
+		{
+			this.world.TILE_SIZE += amount;
+			if(this.world.TILE_SIZE < 16)
+				this.world.TILE_SIZE = 16;
+			if(this.world.TILE_SIZE > 64)
+				this.world.TILE_SIZE = 64;
+		}
 	}
 	
 	public void update()
 	{
-		this.world.update();
+		if(this.currentGui == null)
+			this.world.update();
+		else
+			this.currentGui.update(this.input.mouseX, this.input.mouseY, this.input.isMouseButtonDown(0));
 	}
 	
 	public void render()
@@ -104,6 +124,8 @@ public class Game extends Canvas implements Runnable
 		if(this.getBufferStrategy() == null)
 			this.createBufferStrategy(2);
 		Graphics g = this.getBufferStrategy().getDrawGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
 		this.world.render(g, this.partialTick);
 		int mx = this.world.player.x-64;
@@ -116,18 +138,21 @@ public class Game extends Canvas implements Runnable
 			my = 0;
 		if(my > 128)
 			my = 128;
-		g.drawImage(this.world.mapImage, this.applet.getWidth()-128, this.applet.getHeight()-128, this.applet.getWidth(), this.applet.getHeight(), mx, my, mx+128, my+128, null);
+		g.drawImage(this.world.mapImage, this.getWidth()-128, this.getHeight()-128, this.getWidth(), this.getHeight(), mx, my, mx+128, my+128, null);
 		g.setColor(Color.yellow);
 		for(Entity entity : this.world.entities)
 			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
-				g.fillRect(this.applet.getWidth()-128+entity.x-mx, this.applet.getHeight()-128+entity.y-my, 1, 1);
+				g.fillRect(this.getWidth()-128+entity.x-mx, this.getHeight()-128+entity.y-my, 1, 1);
 		g.setColor(Color.red);
-		g.fillRect(this.applet.getWidth()-128+this.world.player.x-mx-1, this.applet.getHeight()-128+this.world.player.y-my-1, 3, 3);
+		g.fillRect(this.getWidth()-128+this.world.player.x-mx-1, this.getHeight()-128+this.world.player.y-my-1, 3, 3);
 		
-		if(this.getBufferStrategy() == null)
-			this.createBufferStrategy(2);
-		g.dispose();
-		this.getBufferStrategy().show();
+		if(this.isRunning)
+		{
+			if(this.getBufferStrategy() == null)
+				this.createBufferStrategy(2);
+			g.dispose();
+			this.getBufferStrategy().show();
+		}
 	}
 	
 	@Override
@@ -157,14 +182,16 @@ public class Game extends Canvas implements Runnable
 				this.cups++;
 				this.partialTick = 0F;
 			}
+			if(this.currentGui != null)
+				this.partialTick = 0F;
 			this.render();
 			this.crps++;
 		}
-		this.destroy();
+		destroy(this); // this method called by Tamás Tegzes
 	}
 	
-	public void destroy()
+	public void destroy(Game game) // this method made for Tamás Tegzes
 	{
-		
+		System.err.println("this is destroyed by Tamás Tegzes");
 	}
 }
