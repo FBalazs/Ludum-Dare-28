@@ -50,7 +50,7 @@ public class Texture
 		
 		GUI_BUTTON = new int[3];
 		for(int i = 0; i < 3; i++)
-			GUI_BUTTON[i] = loadTexture("textures/gui/button"+i+".png");
+			GUI_BUTTON[i] = loadTexture("textures/gui/button.png");
 	}
 	
 	public static int loadTexture(String path)
