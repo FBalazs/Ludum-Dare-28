@@ -152,25 +152,40 @@ public class Game extends Canvas implements Runnable
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
 		this.world.render(g, this.partialTick);
-		int mx = this.world.player.x-64;
-		int my = this.world.player.y-64;
-		if(mx < 0)
-			mx = 0;
-		if(mx > 128)
-			mx = 128;
-		if(my < 0)
-			my = 0;
-		if(my > 128)
-			my = 128;
-		g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth()-32, this.getHeight()-32, mx, my, mx+128, my+128, null);
-		for(Entity entity : this.world.entities)
-			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
+		if(World.SIZE <= 128)
+		{
+			int a = 128/World.SIZE;
+			g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth()-32, this.getHeight()-32, 0, 0, World.SIZE, World.SIZE, null);
+			for(Entity entity : this.world.entities)
 			{
 				g.setColor(new Color(entity.mapcolor));
-				g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 2, 2);
+				g.fillRect(this.getWidth()-128-32+entity.x*a-a/2, this.getHeight()-128-32+entity.y*a-a/2, 2*a, 2*a);
 			}
-		g.setColor(Color.red);
-		g.fillRect(this.getWidth()-128-32+this.world.player.x-mx-1, this.getHeight()-128-32+this.world.player.y-my-1, 3, 3);
+			g.setColor(Color.red);
+			g.fillRect(this.getWidth()-128-32+this.world.player.x*a-a/2, this.getHeight()-128-32+this.world.player.y*a-a/2, 2*a+1, 2*a+1);
+		}
+		else
+		{
+			int mx = this.world.player.x-64;
+			int my = this.world.player.y-64;
+			if(mx < 0)
+				mx = 0;
+			if(mx > 128)
+				mx = 128;
+			if(my < 0)
+				my = 0;
+			if(my > 128)
+				my = 128;
+			g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth()-32, this.getHeight()-32, mx, my, mx+128, my+128, null);
+			for(Entity entity : this.world.entities)
+				if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
+				{
+					g.setColor(new Color(entity.mapcolor));
+					g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 2, 2);
+				}
+			g.setColor(Color.red);
+			g.fillRect(this.getWidth()-128-32+this.world.player.x-mx-1, this.getHeight()-128-32+this.world.player.y-my-1, 3, 3);
+		}
 		
 		if(this.currentGui != null)
 			this.currentGui.render(g);
