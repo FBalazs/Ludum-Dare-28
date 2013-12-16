@@ -24,8 +24,8 @@ public class WorldRenderer
 	public void render(float partialTick)
 	{
 		int mt = (int)(this.world.player.maxMoveTime/this.world.getTileAt(this.world.player.x, this.world.player.y).getWalkSpeed());
-		this.px = this.world.player.x*this.world.TILE_SIZE+(this.world.player.nx-this.world.player.x)*(mt-this.world.player.moveTime)*this.world.TILE_SIZE/mt-Game.instance.getWidth()/2;
-		this.py = this.world.player.y*this.world.TILE_SIZE+(this.world.player.ny-this.world.player.y)*(mt-this.world.player.moveTime)*this.world.TILE_SIZE/mt-Game.instance.getHeight()/2;
+		this.px = this.world.player.x*this.world.TILE_SIZE+(int)((this.world.player.nx-this.world.player.x)*(mt-this.world.player.moveTime+partialTick)*this.world.TILE_SIZE/mt)-Game.instance.getWidth()/2;
+		this.py = this.world.player.y*this.world.TILE_SIZE+(int)((this.world.player.ny-this.world.player.y)*(mt-this.world.player.moveTime+partialTick)*this.world.TILE_SIZE/mt)-Game.instance.getHeight()/2;
 		
 		int rx = Game.instance.applet.getWidth()/this.world.TILE_SIZE/2;
 		int ry = Game.instance.applet.getHeight()/this.world.TILE_SIZE/2;

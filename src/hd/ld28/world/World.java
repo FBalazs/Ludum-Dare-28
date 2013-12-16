@@ -3,7 +3,9 @@ package hd.ld28.world;
 import hd.ld28.Game;
 import hd.ld28.entity.Entity;
 import hd.ld28.entity.EntityGift;
+import hd.ld28.entity.EntityKid;
 import hd.ld28.entity.EntityPlayer;
+import hd.ld28.gui.GuiGameOver;
 import hd.ld28.render.RenderingHelper;
 import hd.ld28.render.Texture;
 import hd.ld28.render.WorldRenderer;
@@ -23,18 +25,22 @@ public class World
 	
 	public int SIZE = 32;
 	public int TILE_SIZE = 32;
-	public int KIDS = 8;
+	public int KIDS = 4;
 	
 	public Random random;
 	public WorldRenderer renderer;
 	public BufferedImage mapImage;
 	
+	public long lifetime;
+	
 	public World()
 	{
+		this.lifetime = 0;
 		this.tiles = new int[this.SIZE][this.SIZE];
 		this.entities = new ArrayList<Entity>();
 		this.random = Game.instance.random;
 		this.generate();
+		
 		int x = this.SIZE/2, y = this.SIZE/2;
 		while(!Tile.tiles.get(this.tiles[x][y]).isWalkable())
 		{
@@ -42,6 +48,19 @@ public class World
 			y = this.random.nextInt(this.SIZE);
 		}
 		this.player = new EntityPlayer(this, x, y);
+		
+		for(int i = 0; i < this.KIDS; i++)
+		{
+			x = this.random.nextInt(this.SIZE);
+			y = this.random.nextInt(this.SIZE);
+			while(this.tiles[x][y] != Tile.GRASS)
+			{
+				x = this.random.nextInt(this.SIZE);
+				y = this.random.nextInt(this.SIZE);
+			}
+			this.entities.add(new EntityKid(this, x, y, i));
+		}
+		
 		for(int i = 0; i < this.KIDS; i++)
 		{
 			x = this.random.nextInt(this.SIZE);
@@ -73,7 +92,7 @@ public class World
 	
 	public void generateLakes()
 	{
-		for(int l = 0; l < 32; l++)
+		for(int l = 0; l < this.SIZE/1024; l++)
 		{
 			int x = this.random.nextInt(this.SIZE);
 			int y = this.random.nextInt(this.SIZE);
@@ -150,6 +169,13 @@ public class World
 				this.entities.remove(i);
 				i--;
 			}
+		
+		this.lifetime++;
+		
+		if(this.player.gifts == this.KIDS)
+		{
+			Game.instance.setCurrentGui(new GuiGameOver(null, 0, 0, Game.instance.getWidth(), Game.instance.getHeight(), true, this.lifetime));
+		}
 	}
 	
 	public void render(Graphics g, float partialTick)

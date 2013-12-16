@@ -163,10 +163,12 @@ public class Game extends Canvas implements Runnable
 		if(my > 128)
 			my = 128;
 		g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth()-32, this.getHeight()-32, mx, my, mx+128, my+128, null);
-		g.setColor(Color.yellow);
 		for(Entity entity : this.world.entities)
 			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
+			{
+				g.setColor(new Color(entity.mapcolor));
 				g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 1, 1);
+			}
 		g.setColor(Color.red);
 		g.fillRect(this.getWidth()-128-32+this.world.player.x-mx-1, this.getHeight()-128-32+this.world.player.y-my-1, 3, 3);
 		

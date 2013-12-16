@@ -11,6 +11,7 @@ public class Entity
 	public int x, y, nx, ny;
 	public int moveTime, maxMoveTime;
 	public boolean shouldRemove;
+	public int mapcolor;
 	
 	public Entity(World world, int x, int y)
 	{
@@ -21,6 +22,7 @@ public class Entity
 		this.ny = y;
 		this.moveTime = 0;
 		this.shouldRemove = false;
+		this.mapcolor = Color.yellow.getRGB();
 	}
 	
 	public void update()

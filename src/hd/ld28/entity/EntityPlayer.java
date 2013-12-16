@@ -3,13 +3,14 @@ package hd.ld28.entity;
 import java.awt.event.KeyEvent;
 
 import hd.ld28.Game;
+import hd.ld28.gui.GuiGameOver;
 import hd.ld28.world.Direction;
 import hd.ld28.world.World;
 
 public class EntityPlayer extends Entity
 {
-	public int anim, animTime, danim, dir;
-	public boolean hasGift;
+	public int anim, animTime, danim, dir, gifts;
+	public boolean hasGift, pspace;
 	
 	public EntityPlayer(World world, int x, int y)
 	{
@@ -20,12 +21,46 @@ public class EntityPlayer extends Entity
 		this.dir = Direction.UP;
 		this.hasGift = false;
 		this.maxMoveTime = Game.instance.requestedUPS/5;
+		this.gifts = 0;
 	}
 	
 	@Override
 	public void update()
 	{
 		super.update();
+		
+		if(Game.instance.input.isKeyDown(KeyEvent.VK_SPACE))
+			if(!this.pspace)
+			{
+				boolean gift = false;
+				for(Entity entity : this.world.entities)
+					if(entity instanceof EntityKid
+						&& (entity.x-this.x)*(entity.x-this.x)+(entity.y-this.y)*(entity.y-this.y) < 3*3
+						&& this.hasGift)
+					{
+						EntityKid kid = (EntityKid)entity;
+						if(kid.hasGift)
+						{
+							Game.instance.setCurrentGui(new GuiGameOver(null, 0, 0, Game.instance.getWidth(), Game.instance.getHeight(), false, this.world.lifetime));
+						}
+						else
+						{
+							this.gifts++;
+							kid.hasGift = true;
+							this.hasGift = false;
+							gift = true;
+						}
+					}
+				
+				if(!gift)
+				{
+					
+				}
+			}
+			else
+				this.pspace = true;
+		else
+			this.pspace = false;
 		
 		if(this.moveTime == 0)
 		{

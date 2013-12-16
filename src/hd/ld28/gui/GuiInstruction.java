@@ -77,9 +77,9 @@ public class GuiInstruction extends Gui
 			break;
 			case 2:
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa has to give presents to children");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32 - 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[0]);
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[1]);
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32 + 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[2]);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -32 - 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[0][0]);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[1][0]);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -32 + 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[2][0]);
 				break;
 			case 3:
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa's bag can hold ONE Present at a time!");

@@ -14,6 +14,7 @@ public class Tile
 	public static int GRASS,
 					LEAVES,
 					TREE,
+					LOG,
 					WATER,
 					ROCK;
 	
@@ -24,6 +25,7 @@ public class Tile
 		GRASS = new Tile().register(Texture.TILE_GRASS, new Color(0, 128, 0).getRGB());
 		LEAVES = new TileWall().register(Texture.TILE_LEAVES, new Color(0, 192, 0).getRGB());
 		TREE = new TileObject().register(Texture.TILE_TREE, new Color(0, 80, 0).getRGB());
+		LOG = new TileWalkableObject().register(Texture.TILE_LOG, new Color(128, 128, 0).getRGB());
 		WATER = new TileFluid().register(Texture.TILE_WATER, new Color(0, 0, 192).getRGB());
 		ROCK = new TileObject().register(Texture.TILE_ROCK, new Color(80, 64, 64).getRGB());
 	}
