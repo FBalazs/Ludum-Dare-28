@@ -41,7 +41,7 @@ public class GuiInstruction extends Gui
 
 		if(this.btnBack.wasClicked())
 			Game.instance.setCurrentGui(this.parent);
-		if(this.btnNext.wasClicked() && this.page < 5)
+		if(this.btnNext.wasClicked() && this.page < 6)
 			this.page++;
 		if(this.btnPrev.wasClicked() && this.page > 0)
 			this.page--;
@@ -86,6 +86,10 @@ public class GuiInstruction extends Gui
 				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
 				break;
 			case 4:
+				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa's bag can hold ONE Present at a time!");
+				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
+				break;
+			case 5:
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa can chop down trees");
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "to go through the forest!");
 				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
@@ -96,7 +100,7 @@ public class GuiInstruction extends Gui
 
 
 				break;
-			case 5:
+			case 6:
 				g.drawString("YOU ONLY GET ONE present for each child!", textWidth - 28, this.height / 2 +20);
 			break;
 		}
