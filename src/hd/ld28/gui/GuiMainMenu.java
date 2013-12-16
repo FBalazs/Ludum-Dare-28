@@ -29,7 +29,7 @@ public class GuiMainMenu extends Gui
 
 		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*2, 86*2, 23*2, "Credit");
 
-		this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*3, 86*2, 23*2, "Exit");
+		//this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*3, 86*2, 23*2, "Exit");
 
 		super.init();
 	}
@@ -38,9 +38,13 @@ public class GuiMainMenu extends Gui
 	public void update(int mouseX, int mouseY, boolean pressed)
 	{
 		super.update(mouseX, mouseY, pressed);
-		
+
 		if(this.btnNewGame.wasClicked())
 			Game.instance.setCurrentGui(null);
+		if(this.btnCredit.wasClicked())
+			Game.instance.setCurrentGui(new GuiCredit(this, 0, 0, this.width, this.height));
+		if(this.btnInstruction.wasClicked())
+			Game.instance.setCurrentGui(new GuiInstruction(this, 0, 0, this.width, this.height));
 	}
 	
 	@Override

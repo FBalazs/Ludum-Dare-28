@@ -21,9 +21,10 @@ public class Texture
 					TILE_ROCK,
 					ENTITY_GIFT,
 					ENTITY_PLAYER_GIFT;
-	public static int[] ENTITY_PLAYER,
-						GUI_BUTTON;
-	
+	public static int[] ENTITY_PLAYER;
+	public static int GUI_BUTTON;
+	public static int[] ENTITY_CHILDREN;
+
 	public static void init()
 	{
 		textures = new ArrayList<BufferedImage>();
@@ -43,14 +44,16 @@ public class Texture
 		TILE_ROCK = loadTexture("textures/tiles/rock.png");
 		ENTITY_GIFT = loadTexture("textures/entities/gift.png");
 		ENTITY_PLAYER_GIFT = loadTexture("textures/entities/playerGift.png");
-		
+
 		ENTITY_PLAYER = new int[3];
 		for(int i = 0; i < 3; i++)
 			ENTITY_PLAYER[i] = loadTexture("textures/entities/player"+i+".png");
-		
-		GUI_BUTTON = new int[3];
+
+		ENTITY_CHILDREN = new int[3];
 		for(int i = 0; i < 3; i++)
-			GUI_BUTTON[i] = loadTexture("textures/gui/button.png");
+			ENTITY_CHILDREN[i] = loadTexture("textures/entities/kid"+(i+1)+".png");
+
+		GUI_BUTTON = loadTexture("textures/gui/button.png");
 	}
 	
 	public static int loadTexture(String path)

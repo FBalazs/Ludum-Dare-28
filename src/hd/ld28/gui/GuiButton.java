@@ -53,7 +53,7 @@ public class GuiButton extends Gui
 	public void render(Graphics g)
 	{
 		g.setColor(Color.white);
-		RenderingHelper.fillTexturedRect(g, this.x, this.y, this.width, this.height, Texture.GUI_BUTTON[this.state]);
+		RenderingHelper.fillTexturedRect(g, this.x, this.y, this.width, this.height, Texture.GUI_BUTTON);
 		g.setFont(new Font("SansSerif", Font.BOLD, 16));
 
 		g.setColor(new Color(0x3a592d));
