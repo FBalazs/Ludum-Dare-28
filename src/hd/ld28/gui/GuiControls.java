@@ -6,13 +6,13 @@ import hd.ld28.render.Texture;
 
 import java.awt.*;
 
-public class GuiInstruction extends Gui
+public class GuiControls extends Gui
 {
 	public GuiButton btnBack, btnNext, btnPrev;
 
 	private int page = 0;
 
-	public GuiInstruction(Gui parent, int x, int y, int width, int height)
+	public GuiControls(Gui parent, int x, int y, int width, int height)
 	{
 		super(parent, x, y, width, height);
 	}
@@ -41,7 +41,7 @@ public class GuiInstruction extends Gui
 
 		if(this.btnBack.wasClicked())
 			Game.instance.setCurrentGui(this.parent);
-		if(this.btnNext.wasClicked() && this.page < 7)
+		if(this.btnNext.wasClicked() && this.page < 3)
 			this.page++;
 		if(this.btnPrev.wasClicked() && this.page > 0)
 			this.page--;
@@ -61,31 +61,13 @@ public class GuiInstruction extends Gui
 		g.setColor(new Color(0xffffff));
 		g.setFont(new Font("SansSerif", Font.BOLD, 16));
 		int textWidth = this.width / 2 - 180;
-		g.drawString("Instructions:", textWidth - 10, this.height / 2 - 50);
+		g.drawString("Controls:", textWidth - 10, this.height / 2 - 50);
 
 		g.setFont(new Font("SansSerif", Font.BOLD, 20));
 
 		switch (this.page)
 		{
 			case 0:
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "You are Santa");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER[2]);
-			break;
-			case 1:
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa has to give presents to children");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_GIFT);
-			break;
-			case 2:
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa has to give presents to children");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32 - 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[0][0]);
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[1][0]);
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32 + 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[2][0]);
-				break;
-			case 3:
-				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 - 20, "Santa's bag can hold ONE Present at a time!");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
-				break;
-			case 4:
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa can chop down trees");
 				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2, "to go through the forest!");
 				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
@@ -94,7 +76,7 @@ public class GuiInstruction extends Gui
 				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
 			break;
-			case 5:
+			case 1:
 				g.setFont(new Font("SansSerif", Font.BOLD, 20));
 				g.setColor(new Color(0xffffff));
 				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 - 20, "Santa can also give presents");
@@ -104,7 +86,7 @@ public class GuiInstruction extends Gui
 				
 				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[3][3]);
 			break;
-			case 6:
+			case 2:
 				g.setFont(new Font("SansSerif", Font.BOLD, 20));
 				g.setColor(new Color(0xffffff));
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa moves with arrows");
@@ -114,9 +96,6 @@ public class GuiInstruction extends Gui
 				g.setColor(new Color(0x000000));
 				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
-			break;
-			case 7:
-				g.drawString("YOU ONLY GET ONE present for each child!", textWidth - 28, this.height / 2 +20);
 			break;
 		}
 		super.render(g);
