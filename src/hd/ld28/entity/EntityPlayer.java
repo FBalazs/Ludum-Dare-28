@@ -13,6 +13,8 @@ public class EntityPlayer extends Entity
 	public int anim, animTime, danim, dir, gifts;
 	public boolean hasGift, pspace;
 	
+	public boolean keyUp, keyDown, keyLeft, keyRight, keyAction;
+	
 	public EntityPlayer(World world, int x, int y)
 	{
 		super(world, x, y);
@@ -30,7 +32,13 @@ public class EntityPlayer extends Entity
 	{
 		super.update();
 		
-		if(Game.instance.input.isKeyDown(KeyEvent.VK_SPACE))
+		this.keyUp = Game.instance.input.isKeyDown(KeyEvent.VK_W) || Game.instance.input.isKeyDown(KeyEvent.VK_UP);
+		this.keyDown = Game.instance.input.isKeyDown(KeyEvent.VK_S) || Game.instance.input.isKeyDown(KeyEvent.VK_DOWN);
+		this.keyLeft = Game.instance.input.isKeyDown(KeyEvent.VK_A) || Game.instance.input.isKeyDown(KeyEvent.VK_LEFT);
+		this.keyRight = Game.instance.input.isKeyDown(KeyEvent.VK_D) || Game.instance.input.isKeyDown(KeyEvent.VK_RIGHT);
+		this.keyAction = Game.instance.input.isKeyDown(KeyEvent.VK_E) || Game.instance.input.isKeyDown(KeyEvent.VK_SPACE);
+		
+		if(this.keyAction)
 			if(!this.pspace)
 			{
 				boolean gift = false;
@@ -74,18 +82,13 @@ public class EntityPlayer extends Entity
 			this.x = this.nx;
 			this.y = this.ny;
 			
-			boolean keyUp = Game.instance.input.isKeyDown(KeyEvent.VK_W);
-			boolean keyDown = Game.instance.input.isKeyDown(KeyEvent.VK_S);
-			boolean keyLeft = Game.instance.input.isKeyDown(KeyEvent.VK_A);
-			boolean keyRight = Game.instance.input.isKeyDown(KeyEvent.VK_D);
-			
-			if(keyUp && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
+			if(this.keyUp && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
 				this.ny--;
-			if(keyDown && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
+			if(this.keyDown && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
 				this.ny++;
-			if(keyLeft && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
+			if(this.keyLeft && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
 				this.nx--;
-			if(keyRight && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
+			if(this.keyRight && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
 				this.nx++;
 			
 			/*System.out.println(Game.instance.input.isKeyDown(KeyEvent.VK_W)+" "
@@ -106,13 +109,13 @@ public class EntityPlayer extends Entity
 			{
 				int dx = 0;
 				int dy = 0;
-				if(keyUp)
+				if(this.keyUp)
 					dy--;
-				if(keyDown)
+				if(this.keyDown)
 					dy++;
-				if(keyLeft)
+				if(this.keyLeft)
 					dx--;
-				if(keyRight)
+				if(this.keyRight)
 					dx++;
 				this.dir = Direction.getDirFromDelta(dx, dy);
 			}
