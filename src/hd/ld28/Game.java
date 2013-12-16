@@ -213,38 +213,51 @@ public class Game extends Canvas implements Runnable
 	@Override
 	public void run()
 	{
-		this.init();
-		this.isRunning = true;
-		while(this.isRunning)
+		try
 		{
-			this.currentTime = System.currentTimeMillis();
-			
-			if(this.currentTime-this.lastClockTime >= 1000L)
+			this.init();
+			this.isRunning = true;
+			while(this.isRunning)
 			{
-				this.applet.showStatus("UPS: "+this.cups+" RPS: "+this.crps);
-				this.ups = this.cups;
-				this.rps = this.crps;
-				this.cups = 0;
-				this.crps = 0;
-				this.lastClockTime = this.currentTime;
+				this.currentTime = System.currentTimeMillis();
+				
+				if(this.currentTime-this.lastClockTime >= 1000L)
+				{
+					this.applet.showStatus("UPS: "+this.cups+" RPS: "+this.crps);
+					this.ups = this.cups;
+					this.rps = this.crps;
+					this.cups = 0;
+					this.crps = 0;
+					this.lastClockTime = this.currentTime;
+				}
+				
+				this.partialTick = (this.currentTime-this.lastUpdateTime)*this.requestedUPS/1000F;
+				if(this.partialTick >= 1F)
+				{
+					this.lastUpdateTime = this.currentTime;
+					this.update();
+					this.cups++;
+					this.partialTick = 0F;
+				}
+				if(this.currentGui != null)
+					this.partialTick = 0F;
+				this.render();
+				this.crps++;
 			}
 			
-			this.partialTick = (this.currentTime-this.lastUpdateTime)*this.requestedUPS/1000F;
-			if(this.partialTick >= 1F)
-			{
-				this.lastUpdateTime = this.currentTime;
-				this.update();
-				this.cups++;
-				this.partialTick = 0F;
-			}
-			if(this.currentGui != null)
-				this.partialTick = 0F;
-			this.render();
-			this.crps++;
+			destroy(this); // this method called by Tamas Tegzes
+			System.exit(0);
 		}
-		
-		destroy(this); // this method called by Tamas Tegzes
-		System.exit(0);
+		catch(Exception e)
+		{
+			Graphics g = this.getGraphics();
+			g.setColor(Color.black);
+			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g.setColor(Color.red);
+			g.setFont(new Font("SansSerif", Font.PLAIN, 40));
+			RenderingHelper.drawCenteredString(g, this.getWidth()/2, this.getHeight()/2-30, "Something bad happened! :(");
+			RenderingHelper.drawCenteredString(g, this.getWidth()/2, this.getHeight()/2+30, "Try to reload this page!");
+		}
 	}
 	
 	public void destroy(Game game) // this method made for Tamas Tegzes
