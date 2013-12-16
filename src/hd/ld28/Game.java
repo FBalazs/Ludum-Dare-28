@@ -3,6 +3,7 @@ package hd.ld28;
 import hd.ld28.entity.Entity;
 import hd.ld28.gui.Gui;
 import hd.ld28.gui.GuiMainMenu;
+import hd.ld28.render.RenderingHelper;
 import hd.ld28.render.Texture;
 import hd.ld28.world.Tile;
 import hd.ld28.world.World;
@@ -154,7 +155,22 @@ public class Game extends Canvas implements Runnable
 		
 		if(this.currentGui != null)
 			this.currentGui.render(g);
-		
+
+		for(int i = 0; i*32 < this.getWidth(); i++)
+		{
+			RenderingHelper.fillTexturedRect(g, i*32, 0, 32, 32, Texture.BORDER[4]);
+			RenderingHelper.fillTexturedRect(g, i*32, this.getHeight()-32, 32, 32, Texture.BORDER[4]);
+		}
+		for(int i = 0; i*32 < this.getHeight(); i++)
+		{
+			RenderingHelper.fillTexturedRect(g, 0, i*32, 32, 32, Texture.BORDER[5]);
+			RenderingHelper.fillTexturedRect(g, this.getWidth()-32, i*32, 32, 32, Texture.BORDER[5]);
+		}
+		RenderingHelper.fillTexturedRect(g, 0, 0, 32, 32, Texture.BORDER[0]);
+		RenderingHelper.fillTexturedRect(g, this.getWidth()-32, 0, 32, 32, Texture.BORDER[1]);
+		RenderingHelper.fillTexturedRect(g, this.getWidth()-32, this.getHeight()-32, 32, 32, Texture.BORDER[2]);
+		RenderingHelper.fillTexturedRect(g, 0, this.getHeight()-32, 32, 32, Texture.BORDER[3]);
+
 		if(this.isRunning)
 		{
 			if(this.getBufferStrategy() == null)
@@ -196,11 +212,11 @@ public class Game extends Canvas implements Runnable
 			this.render();
 			this.crps++;
 		}
-		destroy(this); // this method called by Tamás Tegzes
+		destroy(this); // this method called by Tamï¿½s Tegzes
 	}
 	
-	public void destroy(Game game) // this method made for Tamás Tegzes
+	public void destroy(Game game) // this method made for Tamï¿½s Tegzes
 	{
-		System.err.println("this is destroyed by Tamás Tegzes");
+		System.err.println("this is destroyed by Tamï¿½s Tegzes");
 	}
 }
