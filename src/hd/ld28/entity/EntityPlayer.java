@@ -55,34 +55,13 @@ public class EntityPlayer extends Entity
 				
 				if(!gift)
 				{
-					if(0 < this.x)
-					{
-						if(this.world.getTileIdAt(this.x-1, this.y) == Tile.LEAVES)
-							this.world.setTileIdAt(this.x-1, this.y, Tile.GRASS);
-						if(this.world.getTileIdAt(this.x-1, this.y) == Tile.TREE)
-							this.world.setTileIdAt(this.x-1, this.y, Tile.LOG);
-					}
-					if(this.x < this.world.SIZE-1)
-					{
-						if(this.world.getTileIdAt(this.x+1, this.y) == Tile.LEAVES)
-							this.world.setTileIdAt(this.x+1, this.y, Tile.GRASS);
-						if(this.world.getTileIdAt(this.x+1, this.y) == Tile.TREE)
-							this.world.setTileIdAt(this.x+1, this.y, Tile.LOG);
-					}
-					if(0 < this.y)
-					{
-						if(this.world.getTileIdAt(this.x, this.y-1) == Tile.LEAVES)
-							this.world.setTileIdAt(this.x, this.y-1, Tile.GRASS);
-						if(this.world.getTileIdAt(this.x, this.y-1) == Tile.TREE)
-							this.world.setTileIdAt(this.x, this.y-1, Tile.LOG);
-					}
-					if(this.y < this.world.SIZE-1)
-					{
-						if(this.world.getTileIdAt(this.x, this.y+1) == Tile.LEAVES)
-							this.world.setTileIdAt(this.x, this.y+1, Tile.GRASS);
-						if(this.world.getTileIdAt(this.x, this.y+1) == Tile.TREE)
-							this.world.setTileIdAt(this.x, this.y+1, Tile.LOG);
-					}
+					int tx = this.x+Direction.getDeltaX(this.dir);
+					int ty = this.y+Direction.getDeltaY(this.dir);
+					if(0 <= tx && tx < this.world.SIZE && 0 <= ty && ty < this.world.SIZE)
+						if(this.world.getTileIdAt(tx, ty) == Tile.LEAVES)
+							this.world.setTileIdAt(tx, ty, Tile.GRASS);
+						else if(this.world.getTileIdAt(tx, ty) == Tile.TREE)
+							this.world.setTileIdAt(tx, ty, Tile.LOG);
 				}
 			}
 			else
@@ -95,13 +74,18 @@ public class EntityPlayer extends Entity
 			this.x = this.nx;
 			this.y = this.ny;
 			
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_W) && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
+			boolean keyUp = Game.instance.input.isKeyDown(KeyEvent.VK_W);
+			boolean keyDown = Game.instance.input.isKeyDown(KeyEvent.VK_S);
+			boolean keyLeft = Game.instance.input.isKeyDown(KeyEvent.VK_A);
+			boolean keyRight = Game.instance.input.isKeyDown(KeyEvent.VK_D);
+			
+			if(keyUp && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
 				this.ny--;
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_S) && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
+			if(keyDown && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
 				this.ny++;
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_A) && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
+			if(keyLeft && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
 				this.nx--;
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_D) && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
+			if(keyRight && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
 				this.nx++;
 			
 			/*System.out.println(Game.instance.input.isKeyDown(KeyEvent.VK_W)+" "
@@ -117,6 +101,20 @@ public class EntityPlayer extends Entity
 				else
 					this.maxMoveTime = Game.instance.requestedUPS/5;
 				this.moveTime = (int)(this.maxMoveTime/this.world.getTileAt(this.x, this.y).getWalkSpeed());
+			}
+			else
+			{
+				int dx = 0;
+				int dy = 0;
+				if(keyUp)
+					dy--;
+				if(keyDown)
+					dy++;
+				if(keyLeft)
+					dx--;
+				if(keyRight)
+					dx++;
+				this.dir = Direction.getDirFromDelta(dx, dy);
 			}
 		}
 		else
