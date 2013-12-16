@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning;
 	public Gui currentGui;
 	
-	public final int requestedUPS = 50;
+	public final int requestedUPS = 30;
 	public float partialTick;
 	public int ups, rps;
 	private int cups, crps;
@@ -151,7 +151,7 @@ public class Game extends Canvas implements Runnable
 			my = 0;
 		if(my > 128)
 			my = 128;
-		g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth(), this.getHeight(), mx, my, mx+128, my+128, null);
+		g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth()-32, this.getHeight()-32, mx, my, mx+128, my+128, null);
 		g.setColor(Color.yellow);
 		for(Entity entity : this.world.entities)
 			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)

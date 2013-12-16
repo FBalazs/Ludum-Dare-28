@@ -25,7 +25,11 @@ public class GuiInstruction extends Gui
 		this.btnBack = new GuiButton(this, this.width/2 - 86, this.height/2-23 + 60*2, 86*2, 23*2, "Back");
 		this.btnPrev = new GuiButton(this, this.width/2 - 86 - 300, this.height/2-23, 86*2, 23*2, "<");
 		this.btnNext = new GuiButton(this, this.width/2 - 86 + 300, this.height/2-23, 86*2, 23*2, ">");
-
+		
+		this.subs.add(this.btnBack);
+		this.subs.add(this.btnPrev);
+		this.subs.add(this.btnNext);
+		
 		super.init();
 	}
 	
@@ -35,7 +39,7 @@ public class GuiInstruction extends Gui
 		super.update(mouseX, mouseY, pressed);
 
 		if(this.btnBack.wasClicked())
-			Game.instance.setCurrentGui(new GuiMainMenu(null, 0, 0, this.width, this.height));
+			Game.instance.setCurrentGui(this.parent);
 		if(this.btnNext.wasClicked() && this.page < 4)
 			this.page++;
 		if(this.btnPrev.wasClicked() && this.page > 0)
@@ -77,7 +81,6 @@ public class GuiInstruction extends Gui
 				RenderingHelper.fillTexturedRect(g, this.width/2 -32 + 100, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[2]);
 				break;
 			case 3:
-
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa's bag can hold ONE Present at a time!");
 				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
 			break;
