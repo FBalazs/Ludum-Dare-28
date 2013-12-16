@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import hd.ld28.Game;
 import hd.ld28.gui.GuiGameOver;
 import hd.ld28.world.Direction;
+import hd.ld28.world.Tile;
 import hd.ld28.world.World;
 
 public class EntityPlayer extends Entity
@@ -54,7 +55,34 @@ public class EntityPlayer extends Entity
 				
 				if(!gift)
 				{
-					
+					if(0 < this.x)
+					{
+						if(this.world.getTileIdAt(this.x-1, this.y) == Tile.LEAVES)
+							this.world.setTileIdAt(this.x-1, this.y, Tile.GRASS);
+						if(this.world.getTileIdAt(this.x-1, this.y) == Tile.TREE)
+							this.world.setTileIdAt(this.x-1, this.y, Tile.LOG);
+					}
+					if(this.x < this.world.SIZE-1)
+					{
+						if(this.world.getTileIdAt(this.x+1, this.y) == Tile.LEAVES)
+							this.world.setTileIdAt(this.x+1, this.y, Tile.GRASS);
+						if(this.world.getTileIdAt(this.x+1, this.y) == Tile.TREE)
+							this.world.setTileIdAt(this.x+1, this.y, Tile.LOG);
+					}
+					if(0 < this.y)
+					{
+						if(this.world.getTileIdAt(this.x, this.y-1) == Tile.LEAVES)
+							this.world.setTileIdAt(this.x, this.y-1, Tile.GRASS);
+						if(this.world.getTileIdAt(this.x, this.y-1) == Tile.TREE)
+							this.world.setTileIdAt(this.x, this.y-1, Tile.LOG);
+					}
+					if(this.y < this.world.SIZE-1)
+					{
+						if(this.world.getTileIdAt(this.x, this.y+1) == Tile.LEAVES)
+							this.world.setTileIdAt(this.x, this.y+1, Tile.GRASS);
+						if(this.world.getTileIdAt(this.x, this.y+1) == Tile.TREE)
+							this.world.setTileIdAt(this.x, this.y+1, Tile.LOG);
+					}
 				}
 			}
 			else
