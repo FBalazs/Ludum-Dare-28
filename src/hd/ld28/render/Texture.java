@@ -24,6 +24,7 @@ public class Texture
 	public static int[] ENTITY_PLAYER;
 	public static int GUI_BUTTON;
 	public static int[] ENTITY_CHILDREN;
+	public static int[] BORDER;
 
 	public static void init()
 	{
@@ -52,6 +53,12 @@ public class Texture
 		ENTITY_CHILDREN = new int[3];
 		for(int i = 0; i < 3; i++)
 			ENTITY_CHILDREN[i] = loadTexture("textures/entities/kid"+(i+1)+".png");
+
+		BORDER = new int[4+2];
+		for(int i = 0; i < 4; i++)
+			BORDER[i] = loadTexture("textures/gui/corner"+(i+1)+".png");
+		BORDER[4] = loadTexture("textures/gui/border_horizontal.png");
+		BORDER[5] = loadTexture("textures/gui/border_vertical.png");
 
 		GUI_BUTTON = loadTexture("textures/gui/button.png");
 	}

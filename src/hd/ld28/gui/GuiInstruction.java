@@ -82,7 +82,7 @@ public class GuiInstruction extends Gui
 				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
 			break;
 			case 4:
-				g.drawString("YOU ONLY GET ONE present for each child!", textWidth, this.height / 2 - 10);
+				g.drawString("YOU ONLY GET ONE present for each child!", textWidth - 28, this.height / 2 +20);
 			break;
 		}
 		super.render(g);
