@@ -22,7 +22,8 @@ public class Texture
 					TILE_WATER,
 					TILE_ROCK,
 					ENTITY_GIFT,
-					ENTITY_PLAYER_GIFT;
+					ENTITY_PLAYER_GIFT,
+					BUTTON_SPACE;
 	public static int[] ENTITY_PLAYER;
 	public static int GUI_BUTTON;
 	public static int[][] ENTITY_CHILDREN;
@@ -69,6 +70,7 @@ public class Texture
 		BORDER[5] = loadTexture("textures/gui/border_vertical.png");
 
 		GUI_BUTTON = loadTexture("textures/gui/button.png");
+		BUTTON_SPACE = loadTexture("textures/gui/btnSpace.png");
 	}
 	
 	public static int loadTexture(String path)

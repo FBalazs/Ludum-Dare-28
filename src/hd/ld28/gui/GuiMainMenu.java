@@ -70,7 +70,7 @@ public class GuiMainMenu extends Gui
 	{
 		g.setColor(new Color(0, 0, 0, 128));
 		g.fillRect(0, 0, this.width, this.height);
-		g.setColor(new Color(0xd80303));
+		g.setColor(new Color(198, 23, 35));
 		g.setFont(new Font("SansSerif", Font.BOLD, 50));
 		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 100, "Present Delivery");
 		super.render(g);
