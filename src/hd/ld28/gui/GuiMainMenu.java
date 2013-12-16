@@ -2,12 +2,14 @@ package hd.ld28.gui;
 
 import hd.ld28.Game;
 import hd.ld28.render.RenderingHelper;
+import hd.ld28.world.World;
 
 import java.awt.*;
 
 public class GuiMainMenu extends Gui
 {
 	public GuiButton btnNewGame,
+					btnResume,
 					btnInstruction,
 					btnCredit,
 					btnExit;
@@ -21,16 +23,24 @@ public class GuiMainMenu extends Gui
 	public void init()
 	{
 		this.isFocused = true;
-
-		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23, 86*2, 23*2, "Play");
-		this.btnNewGame.isFocused = true;
-
-		this.btnInstruction = new GuiButton(this, this.width/2-86, this.height/2-23 + 60, 86*2, 23*2, "Instructions");
-
-		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*2, 86*2, 23*2, "Credit");
-
-		//this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*3, 86*2, 23*2, "Exit");
-
+		
+		this.btnResume = new GuiButton(this, this.width/2-86, this.height/2-23 - 30, 86*2, 23*2, "Resume");
+		this.btnResume.isFocused = true;
+		
+		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23 + 30, 86*2, 23*2, "New Game");
+		
+		this.btnInstruction = new GuiButton(this, this.width/2-86, this.height/2-23 + 90, 86*2, 23*2, "Instructions");
+		
+		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 150, 86*2, 23*2, "Credit");
+		
+		this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 210, 86*2, 23*2, "Exit");
+		
+		this.subs.add(this.btnResume);
+		this.subs.add(this.btnNewGame);
+		this.subs.add(this.btnInstruction);
+		this.subs.add(this.btnCredit);
+		//this.subs.add(this.btnExit);
+		
 		super.init();
 	}
 	
@@ -38,13 +48,20 @@ public class GuiMainMenu extends Gui
 	public void update(int mouseX, int mouseY, boolean pressed)
 	{
 		super.update(mouseX, mouseY, pressed);
-
-		if(this.btnNewGame.wasClicked())
+		
+		if(this.btnResume.wasClicked())
 			Game.instance.setCurrentGui(null);
-		if(this.btnCredit.wasClicked())
-			Game.instance.setCurrentGui(new GuiCredit(this, 0, 0, this.width, this.height));
+		if(this.btnNewGame.wasClicked())
+		{
+			Game.instance.world = new World();
+			Game.instance.setCurrentGui(null);
+		}
 		if(this.btnInstruction.wasClicked())
-			Game.instance.setCurrentGui(new GuiInstruction(this, 0, 0, this.width, this.height));
+			Game.instance.setCurrentGui(new GuiInstruction(this, this.x, this.y, this.width, this.height));
+		if(this.btnCredit.wasClicked())
+			Game.instance.setCurrentGui(new GuiCredit(this, this.x, this.y, this.width, this.height));
+		if(this.btnExit.wasClicked())
+			Game.instance.applet.stop();
 	}
 	
 	@Override

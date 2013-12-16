@@ -58,15 +58,12 @@ public class GuiButton extends Gui
 
 		g.setColor(new Color(0x3a592d));
 		RenderingHelper.drawCenteredString(g, this.x+this.width/2 + 2, this.y+this.height/2 + 2, this.text);
-
+		
+		g.setColor(new Color(0x213219));
 		if(this.state != 1)
-		{
-			g.setColor(new Color(0x213219));
 			RenderingHelper.drawCenteredString(g, this.x+this.width/2, this.y+this.height/2, this.text);
-		} else {
-			g.setColor(new Color(0x213219));
+		else
 			RenderingHelper.drawCenteredString(g, this.x+this.width/2 + 2, this.y+this.height/2 + 2, this.text);
-		}
 		super.render(g);
 	}
 }

@@ -92,10 +92,16 @@ public class Game extends Canvas implements Runnable
 	
 	public void onKeyTyped(char c, int i)
 	{
+		if(i == KeyEvent.VK_ESCAPE || (int)c == KeyEvent.VK_ESCAPE)
+		{
+			if(this.currentGui == null)
+				this.setCurrentGui(new GuiMainMenu(null, 0, 0, this.getWidth(), this.getHeight()));
+			else
+				this.setCurrentGui(null);
+		}
+		
 		if(this.currentGui != null)
 			this.currentGui.onKeyTyped(c, i);
-		else if(i == KeyEvent.VK_ESCAPE || (int)c == KeyEvent.VK_ESCAPE)
-			this.setCurrentGui(new GuiMainMenu(null, 0, 0, this.getWidth(), this.getHeight()));
 	}
 	
 	public void onMouseClicked(int x, int y, int button)
@@ -145,15 +151,13 @@ public class Game extends Canvas implements Runnable
 			my = 0;
 		if(my > 128)
 			my = 128;
-		float minimapScale = 1.2F ;
-		g.drawImage(this.world.mapImage, (int) (this.getWidth()-128*minimapScale-32), (int) (this.getHeight()-128*minimapScale-32), this.getWidth()-32, this.getHeight()-32,
-				mx-32, my-32, (int) (mx+128*minimapScale-32), (int) (my+128*minimapScale-32), null);
+		g.drawImage(this.world.mapImage, this.getWidth()-128-32, this.getHeight()-128-32, this.getWidth(), this.getHeight(), mx, my, mx+128, my+128, null);
 		g.setColor(Color.yellow);
 		for(Entity entity : this.world.entities)
 			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
-				g.fillRect(this.getWidth()-128+entity.x-mx, this.getHeight()-128+entity.y-my, 1, 1);
+				g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 1, 1);
 		g.setColor(Color.red);
-		g.fillRect(this.getWidth()-128+this.world.player.x-mx-1, this.getHeight()-128+this.world.player.y-my-1, 3, 3);
+		g.fillRect(this.getWidth()-128-32+this.world.player.x-mx-1, this.getHeight()-128-32+this.world.player.y-my-1, 3, 3);
 		
 		if(this.currentGui != null)
 			this.currentGui.render(g);
@@ -175,18 +179,14 @@ public class Game extends Canvas implements Runnable
 		RenderingHelper.fillTexturedRect(g, 0, this.getHeight()-32, 32, 32, Texture.BORDER[3]);
 
 		//Minimap border
-		for(int i = (int)(this.getWidth()-128*minimapScale-32)/32+1; i*32 < this.getWidth() ; i++)
+		for(int i = 1; i <= 4; i++)
 		{
-			RenderingHelper.fillTexturedRect(g, i*32, (int) (this.getHeight()-128*minimapScale-32), 32, 32, Texture.BORDER[4]);
+			RenderingHelper.fillTexturedRect(g, this.getWidth()-i*32-32, this.getHeight()-128-64, 32, 32, Texture.BORDER[4]);
+			RenderingHelper.fillTexturedRect(g, this.getWidth()-128-64, this.getHeight()-i*32-32, 32, 32, Texture.BORDER[5]);
 		}
-		for(int i = (int)(this.getHeight()-128*minimapScale-32)/32+1; i*32 < this.getHeight() ; i++)
-		{
-			RenderingHelper.fillTexturedRect(g, (int) (this.getWidth()-128*minimapScale-32), i*32, 32, 32, Texture.BORDER[5]);
-		}
-		RenderingHelper.fillTexturedRect(g, (int)(this.getWidth()-128*minimapScale-32), (int)(this.getHeight()-128*minimapScale-32), 32, 32, Texture.BORDER[0]);
-
-		RenderingHelper.fillTexturedRect(g, (int)(this.getWidth()-128*minimapScale-32), this.getHeight()-32, 32, 32, Texture.BORDER[3]);
-		RenderingHelper.fillTexturedRect(g, this.getWidth()-32, (int)(this.getHeight()-128*minimapScale-32), 32, 32, Texture.BORDER[1]);
+		RenderingHelper.fillTexturedRect(g, this.getWidth()-128-64, this.getHeight()-128-64, 32, 32, Texture.BORDER[0]);
+		RenderingHelper.fillTexturedRect(g, this.getWidth()-128-64, this.getHeight()-32, 32, 32, Texture.BORDER[3]);
+		RenderingHelper.fillTexturedRect(g, this.getWidth()-32, this.getHeight()-128-64, 32, 32, Texture.BORDER[1]);
 
 		if(this.isRunning)
 		{
@@ -229,11 +229,13 @@ public class Game extends Canvas implements Runnable
 			this.render();
 			this.crps++;
 		}
-		destroy(this); // this method called by Tam�s Tegzes
+		
+		destroy(this); // this method called by Tamas Tegzes
+		System.exit(0);
 	}
 	
-	public void destroy(Game game) // this method made for Tam�s Tegzes
+	public void destroy(Game game) // this method made for Tamas Tegzes
 	{
-		System.err.println("this is destroyed by Tam�s Tegzes");
+		System.err.println("this is destroyed by Tamas Tegzes");
 	}
 }

@@ -3,7 +3,6 @@ package hd.ld28.world;
 import hd.ld28.Game;
 import hd.ld28.entity.Entity;
 import hd.ld28.entity.EntityGift;
-import hd.ld28.entity.EntityKid;
 import hd.ld28.entity.EntityPlayer;
 import hd.ld28.render.RenderingHelper;
 import hd.ld28.render.Texture;
@@ -21,7 +20,7 @@ public class World
 	private int[][] tiles;
 	public List<Entity> entities;
 	public EntityPlayer player;
-	public int kidNum = 0;
+	
 	public int TILE_SIZE = 32;
 	
 	public Random random;
@@ -161,24 +160,7 @@ public class World
 			if(this.tiles[x][y] == Tile.GRASS)
 				this.tiles[x][y] = Tile.ROCK;
 		}
-		/*
-		for(int i = 0; i < 6; i++)
-		{
-			int t = 0;
-			int x = this.random.nextInt(256);
-			int y = this.random.nextInt(256);
-
-			while(this.tiles[x][y] != Tile.GRASS && t < 16)
-			{
-				x = this.random.nextInt(256);
-				y = this.random.nextInt(256);
-				t++;
-				this.entities.add(new EntityKid(this, x, y));
-			}
-		}   */
-
-
-
+		
 		this.mapImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
 		for(int i = 0; i < 256; i++)
 			for(int j = 0; j < 256; j++)
@@ -206,15 +188,5 @@ public class World
 		if(this.player.hasGift)
 			RenderingHelper.fillTexturedRect(g, Game.instance.getWidth()/2-this.TILE_SIZE/2-Direction.getDeltaX(this.player.dir)*this.TILE_SIZE/3, Game.instance.getHeight()/2-this.TILE_SIZE/2-Direction.getDeltaY(this.player.dir)*this.TILE_SIZE/3, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER_GIFT);
 		RenderingHelper.fillTexturedRect(g, Game.instance.getWidth()/2-this.TILE_SIZE/2, Game.instance.getHeight()/2-this.TILE_SIZE/2, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER[this.player.anim]);
-
-		for(int i = 0; i < entities.size(); i++)
-		{
-			if(entities.get(i) instanceof EntityKid)
-			{
-				EntityKid kid = (EntityKid) entities.get(i);
-				if(kid.hasGift)
-					RenderingHelper.fillTexturedRect(g, Game.instance.getWidth()/2-this.TILE_SIZE/2-Direction.getDeltaX(kid.dir)*this.TILE_SIZE/3, Game.instance.getHeight()/2-this.TILE_SIZE/2-Direction.getDeltaY(kid.dir)*this.TILE_SIZE/3, this.TILE_SIZE, this.TILE_SIZE, Texture.ENTITY_PLAYER_GIFT);
-			}
-		}
 	}
 }

@@ -3,12 +3,14 @@ package hd.ld28.gui;
 import hd.ld28.Game;
 import hd.ld28.render.RenderingHelper;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 
 public class GuiCredit extends Gui
 {
 	public GuiButton btnBack;
-
+	
 	public GuiCredit(Gui parent, int x, int y, int width, int height)
 	{
 		super(parent, x, y, width, height);
@@ -19,8 +21,11 @@ public class GuiCredit extends Gui
 	{
 		this.isFocused = true;
 
-		this.btnBack = new GuiButton(this, this.width/2-86, this.height/2-23 + 60*2, 86*2, 23*2, "Back");
-
+		this.btnBack = new GuiButton(this, this.width/2-86, this.height*9/10-23, 86*2, 23*2, "Back");
+		this.btnBack.isFocused = true;
+		
+		this.subs.add(this.btnBack);
+		
 		super.init();
 	}
 	
@@ -30,7 +35,7 @@ public class GuiCredit extends Gui
 		super.update(mouseX, mouseY, pressed);
 		
 		if(this.btnBack.wasClicked())
-			Game.instance.setCurrentGui(new GuiMainMenu(null, 0, 0, this.width, this.height));
+			Game.instance.setCurrentGui(this.parent);
 	}
 	
 	@Override
@@ -38,18 +43,14 @@ public class GuiCredit extends Gui
 	{
 		g.setColor(new Color(0, 0, 0, 128));
 		g.fillRect(0, 0, this.width, this.height);
-
-		g.setColor(new Color(198, 23, 35));
-		g.setFont(new Font("SansSerif", Font.BOLD, 50));
-		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 100, "Present Delivery");
-
-		g.setColor(new Color(0xffffff));
-		g.setFont(new Font("SansSerif", Font.BOLD, 16));
-		int textWidth = this.width / 2 - 100;
-		g.drawString("Credits:", textWidth - 10, this.height / 2 - 50);
-		g.drawString("This game was made in 72 Hours", textWidth, this.height / 2 - 30);
-		g.drawString("This is our first game!", textWidth, this.height / 2 - 10);
-		g.drawString("By FBalazs & Dawars", textWidth, this.height / 2 + 10);
+		
+		g.setColor(Color.white);
+		g.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		
+		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2-25, "Tamastom - destroying");
+		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "Dawars - textures and programming");
+		RenderingHelper.drawCenteredString(g, this.width/2, this.height/2+25, "FBalazs - programming");
+		
 		super.render(g);
 	}
 }

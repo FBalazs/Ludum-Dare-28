@@ -23,8 +23,6 @@ public class Gui
 		this.focused = -1;
 		this.isFocused = false;
 		this.subs = new ArrayList<Gui>();
-		if(this.parent != null)
-			this.parent.subs.add(this);
 	}
 	
 	public void onKeyTyped(char c, int i)
