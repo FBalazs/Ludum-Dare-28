@@ -25,6 +25,16 @@ public class Gui
 		this.subs = new ArrayList<Gui>();
 	}
 	
+	public void setBounds(int x, int y, int width, int height)
+	{
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		if(this.parent != null)
+			this.parent.setBounds(x, y, width, height);
+	}
+	
 	public void onKeyTyped(char c, int i)
 	{
 		for(Gui sub : this.subs)

@@ -21,8 +21,9 @@ public class World
 	public List<Entity> entities;
 	public EntityPlayer player;
 	
-	public int SIZE = 256;
+	public int SIZE = 32;
 	public int TILE_SIZE = 32;
+	public int KIDS = 8;
 	
 	public Random random;
 	public WorldRenderer renderer;
@@ -41,19 +42,23 @@ public class World
 			y = this.random.nextInt(this.SIZE);
 		}
 		this.player = new EntityPlayer(this, x, y);
-		for(int i = 0; i < 32; i++)
+		for(int i = 0; i < this.KIDS; i++)
 		{
 			x = this.random.nextInt(this.SIZE);
 			y = this.random.nextInt(this.SIZE);
-			int t = 0;
-			while(this.tiles[x][y] != Tile.GRASS && t < 16)
+			while(this.tiles[x][y] != Tile.GRASS)
 			{
 				x = this.random.nextInt(this.SIZE);
 				y = this.random.nextInt(this.SIZE);
-				t++;
 			}
 			this.entities.add(new EntityGift(this, x, y));
 		}
+	}
+	
+	public void setTileIdAt(int x, int y, int id)
+	{
+		this.tiles[x][y] = id;
+		this.mapImage.setRGB(x, y, Tile.tiles.get(id).mapcolor);
 	}
 	
 	public Tile getTileAt(int x, int y)

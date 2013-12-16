@@ -14,12 +14,12 @@ public class EntityPlayer extends Entity
 	public EntityPlayer(World world, int x, int y)
 	{
 		super(world, x, y);
-		this.maxMoveTime = Game.instance.requestedUPS/5;
 		this.anim = 0;
 		this.animTime = 0;
 		this.danim = 1;
 		this.dir = Direction.UP;
 		this.hasGift = false;
+		this.maxMoveTime = Game.instance.requestedUPS/5;
 	}
 	
 	@Override
@@ -34,11 +34,11 @@ public class EntityPlayer extends Entity
 			
 			if(Game.instance.input.isKeyDown(KeyEvent.VK_W) && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
 				this.ny--;
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_S) && this.ny < 255 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_S) && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
 				this.ny++;
 			if(Game.instance.input.isKeyDown(KeyEvent.VK_A) && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
 				this.nx--;
-			if(Game.instance.input.isKeyDown(KeyEvent.VK_D) && this.nx < 255 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
+			if(Game.instance.input.isKeyDown(KeyEvent.VK_D) && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
 				this.nx++;
 			
 			/*System.out.println(Game.instance.input.isKeyDown(KeyEvent.VK_W)+" "
@@ -49,6 +49,10 @@ public class EntityPlayer extends Entity
 			if(this.x != this.nx || this.y != this.ny)
 			{
 				this.dir = Direction.getDirFromDelta(this.nx-this.x, this.ny-this.y);
+				if(this.x != this.nx && this.y != this.ny)
+					this.maxMoveTime = (int)(Game.instance.requestedUPS*Math.sqrt(2)/5);
+				else
+					this.maxMoveTime = Game.instance.requestedUPS/5;
 				this.moveTime = (int)(this.maxMoveTime/this.world.getTileAt(this.x, this.y).getWalkSpeed());
 			}
 		}

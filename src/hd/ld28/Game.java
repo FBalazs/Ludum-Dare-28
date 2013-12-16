@@ -131,8 +131,7 @@ public class Game extends Canvas implements Runnable
 		if(this.pwidth != this.getWidth() || this.pheight != this.getHeight())
 			if(this.currentGui != null)
 			{
-				this.currentGui.width = this.getWidth();
-				this.currentGui.height = this.getHeight();
+				this.currentGui.setBounds(0, 0, this.getWidth(), this.getHeight());
 				this.currentGui.init();
 			}
 		this.pwidth = this.getWidth();

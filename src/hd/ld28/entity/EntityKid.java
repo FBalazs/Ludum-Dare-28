@@ -26,11 +26,11 @@ public class EntityKid extends Entity
 		{
 			if(this.pathprogress >= this.path.length)
 			{
-				int x = this.world.random.nextInt(256);
-				int y = this.world.random.nextInt(256);
+				int x = this.world.random.nextInt(this.world.SIZE);
+				int y = this.world.random.nextInt(this.world.SIZE);
 				if(this.world.getTileAt(x, y).isWalkable())
 				{
-					// TODO path finding
+					
 				}
 			}
 			else
