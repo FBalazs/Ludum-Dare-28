@@ -257,6 +257,8 @@ public class Game extends Canvas implements Runnable
 			g.setFont(new Font("SansSerif", Font.PLAIN, 40));
 			RenderingHelper.drawCenteredString(g, this.getWidth()/2, this.getHeight()/2-30, "Something bad happened! :(");
 			RenderingHelper.drawCenteredString(g, this.getWidth()/2, this.getHeight()/2+30, "Try to reload this page!");
+
+			e.printStackTrace();
 		}
 	}
 	

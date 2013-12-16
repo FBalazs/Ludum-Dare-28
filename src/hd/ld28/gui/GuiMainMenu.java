@@ -11,6 +11,7 @@ public class GuiMainMenu extends Gui
 	public GuiButton btnNewGame,
 					btnResume,
 					btnInstruction,
+					btnControls,
 					btnCredit,
 					btnExit;
 	
@@ -29,16 +30,17 @@ public class GuiMainMenu extends Gui
 		this.btnResume.isFocused = true;
 		
 		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23 + 30, 86*2, 23*2, "New Game");
-		
+
 		this.btnInstruction = new GuiButton(this, this.width/2-86, this.height/2-23 + 90, 86*2, 23*2, "Instructions");
-		
-		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 150, 86*2, 23*2, "Credit");
-		
-		this.btnExit = new GuiButton(this, this.width/2-86, this.height/2-23 + 210, 86*2, 23*2, "Exit");
-		
+
+		this.btnControls = new GuiButton(this, this.width/2-86, this.height/2-23 + 150, 86*2, 23*2, "Controls");
+
+		this.btnCredit = new GuiButton(this, this.width/2-86, this.height/2-23 + 210, 86*2, 23*2, "Credit");
+
 		this.subs.add(this.btnResume);
 		this.subs.add(this.btnNewGame);
 		this.subs.add(this.btnInstruction);
+		this.subs.add(this.btnControls);
 		this.subs.add(this.btnCredit);
 		//this.subs.add(this.btnExit);
 		
@@ -57,12 +59,12 @@ public class GuiMainMenu extends Gui
 			Game.instance.world = new World();
 			Game.instance.setCurrentGui(null);
 		}
+		if(this.btnControls.wasClicked())
+			Game.instance.setCurrentGui(new GuiControls(this, this.x, this.y, this.width, this.height));
 		if(this.btnInstruction.wasClicked())
 			Game.instance.setCurrentGui(new GuiInstruction(this, this.x, this.y, this.width, this.height));
 		if(this.btnCredit.wasClicked())
 			Game.instance.setCurrentGui(new GuiCredit(this, this.x, this.y, this.width, this.height));
-		if(this.btnExit.wasClicked())
-			Game.instance.applet.stop();
 	}
 	
 	@Override
