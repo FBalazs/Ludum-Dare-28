@@ -41,7 +41,7 @@ public class GuiInstruction extends Gui
 
 		if(this.btnBack.wasClicked())
 			Game.instance.setCurrentGui(this.parent);
-		if(this.btnNext.wasClicked() && this.page < 7)
+		if(this.btnNext.wasClicked() && this.page < 4)
 			this.page++;
 		if(this.btnPrev.wasClicked() && this.page > 0)
 			this.page--;
@@ -84,38 +84,8 @@ public class GuiInstruction extends Gui
 			case 3:
 				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 - 20, "Santa's bag can hold ONE Present at a time!");
 				RenderingHelper.fillTexturedRect(g, this.width/2 -32, this.height/2+16, 64, 64, Texture.ENTITY_PLAYER_GIFT);
-				break;
+			break;
 			case 4:
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa can chop down trees");
-				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2, "to go through the forest!");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
-
-				g.setColor(new Color(0x000000));
-				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
-			break;
-			case 5:
-				g.setFont(new Font("SansSerif", Font.BOLD, 20));
-				g.setColor(new Color(0xffffff));
-				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 - 20, "Santa can also give presents");
-				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2, "to children with Space");
-				RenderingHelper.fillTexturedRect(g, this.width / 2, this.height / 2 + 20, 64, 64, Texture.ENTITY_PLAYER_GIFT);
-				RenderingHelper.fillTexturedRect(g, this.width / 2 + 32, this.height / 2 + 16, 64, 64, Texture.ENTITY_PLAYER[1]);
-				
-				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+16, 64, 64, Texture.ENTITY_CHILDREN[3][3]);
-			break;
-			case 6:
-				g.setFont(new Font("SansSerif", Font.BOLD, 20));
-				g.setColor(new Color(0xffffff));
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa moves with arrows");
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "or WASD");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
-
-				g.setColor(new Color(0x000000));
-				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
-			break;
-			case 7:
 				g.drawString("YOU ONLY GET ONE present for each child!", textWidth - 28, this.height / 2 +20);
 			break;
 		}

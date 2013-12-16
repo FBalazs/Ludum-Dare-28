@@ -23,7 +23,8 @@ public class Texture
 					TILE_ROCK,
 					ENTITY_GIFT,
 					ENTITY_PLAYER_GIFT,
-					BUTTON_SPACE;
+					BUTTON_SPACE,
+					BUTTON_LETTER;
 	public static int[] ENTITY_PLAYER;
 	public static int GUI_BUTTON;
 	public static int[][] ENTITY_CHILDREN;
@@ -71,6 +72,7 @@ public class Texture
 
 		GUI_BUTTON = loadTexture("textures/gui/button.png");
 		BUTTON_SPACE = loadTexture("textures/gui/btnSpace.png");
+		BUTTON_LETTER = loadTexture("textures/gui/btnLetter.png");
 	}
 	
 	public static int loadTexture(String path)

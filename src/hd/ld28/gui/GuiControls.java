@@ -41,7 +41,7 @@ public class GuiControls extends Gui
 
 		if(this.btnBack.wasClicked())
 			Game.instance.setCurrentGui(this.parent);
-		if(this.btnNext.wasClicked() && this.page < 3)
+		if(this.btnNext.wasClicked() && this.page < 2)
 			this.page++;
 		if(this.btnPrev.wasClicked() && this.page > 0)
 			this.page--;
@@ -73,7 +73,7 @@ public class GuiControls extends Gui
 				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
 
 				g.setColor(new Color(0x000000));
-				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
+				g.setFont(new Font("SansSerif", Font.BOLD, 16));
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
 			break;
 			case 1:
@@ -91,11 +91,19 @@ public class GuiControls extends Gui
 				g.setColor(new Color(0xffffff));
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 - 20, "Santa moves with arrows");
 				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "or WASD");
-				RenderingHelper.fillTexturedRect(g, this.width/2 -64, this.height/2+32, 128, 32, Texture.BUTTON_SPACE);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -16, this.height/2+21, 32, 32, Texture.BUTTON_LETTER);
+
+				RenderingHelper.fillTexturedRect(g, this.width/2 -16  + 32 + 5, this.height/2+21 + 32 + 5, 32, 32, Texture.BUTTON_LETTER);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -16, this.height/2+21 + 32 + 5, 32, 32, Texture.BUTTON_LETTER);
+				RenderingHelper.fillTexturedRect(g, this.width/2 -16  - 32 - 5, this.height/2+21 + 32 + 5, 32, 32, Texture.BUTTON_LETTER);
 
 				g.setColor(new Color(0x000000));
-				g.setFont(new Font("SansSerif", Font.PLAIN, 16));
-				RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 48, "Space");
+				g.setFont(new Font("SansSerif", Font.BOLD, 16));
+				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 + 35, "W");
+
+				RenderingHelper.drawCenteredString(g, this.width / 2 + 32 + 5, this.height / 2 + 35 + 32 + 5, "D");
+				RenderingHelper.drawCenteredString(g, this.width / 2, this.height / 2 + 35 + 32 + 5, "S");
+				RenderingHelper.drawCenteredString(g, this.width / 2 - 32 - 5, this.height / 2 + 35 + 32 + 5, "A");
 			break;
 		}
 		super.render(g);
