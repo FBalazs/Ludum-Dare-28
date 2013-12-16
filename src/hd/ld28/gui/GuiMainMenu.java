@@ -22,6 +22,7 @@ public class GuiMainMenu extends Gui
 	@Override
 	public void init()
 	{
+		this.subs.clear();
 		this.isFocused = true;
 		
 		this.btnResume = new GuiButton(this, this.width/2-86, this.height/2-23 - 30, 86*2, 23*2, "Resume");

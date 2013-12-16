@@ -35,13 +35,15 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		this.keys[e.getKeyCode()] = true;
+		if(e.getKeyCode() < this.keys.length)
+			this.keys[e.getKeyCode()] = true;
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		this.keys[e.getKeyCode()] = false;
+		if(e.getKeyCode() < this.keys.length)
+			this.keys[e.getKeyCode()] = false;
 	}
 
 	@Override

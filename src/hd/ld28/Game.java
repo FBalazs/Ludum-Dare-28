@@ -30,11 +30,13 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning;
 	public Gui currentGui;
 	
-	public final int requestedUPS = 30;
+	public final int requestedUPS = 25;
 	public float partialTick;
 	public int ups, rps;
 	private int cups, crps;
 	private long currentTime, lastUpdateTime, lastClockTime;
+	
+	public int pwidth, pheight;
 	
 	public Game(GameApplet applet)
 	{
@@ -126,6 +128,16 @@ public class Game extends Canvas implements Runnable
 	
 	public void update()
 	{
+		if(this.pwidth != this.getWidth() || this.pheight != this.getHeight())
+			if(this.currentGui != null)
+			{
+				this.currentGui.width = this.getWidth();
+				this.currentGui.height = this.getHeight();
+				this.currentGui.init();
+			}
+		this.pwidth = this.getWidth();
+		this.pheight = this.getHeight();
+		
 		if(this.currentGui == null)
 			this.world.update();
 		else

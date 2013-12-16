@@ -20,6 +20,7 @@ public class GuiInstruction extends Gui
 	@Override
 	public void init()
 	{
+		this.subs.clear();
 		this.isFocused = true;
 
 		this.btnBack = new GuiButton(this, this.width/2 - 86, this.height/2-23 + 60*2, 86*2, 23*2, "Back");
