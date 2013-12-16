@@ -11,7 +11,7 @@ import hd.ld28.world.World;
 public class EntityPlayer extends Entity
 {
 	public int anim, animTime, danim, dir, gifts;
-	public boolean hasGift, pspace;
+	public boolean hasGift, pspace, hasChild;
 	
 	public boolean keyUp, keyDown, keyLeft, keyRight, keyAction;
 	
@@ -25,6 +25,7 @@ public class EntityPlayer extends Entity
 		this.hasGift = false;
 		this.maxMoveTime = Game.instance.requestedUPS/5;
 		this.gifts = 0;
+		this.hasChild = false;
 	}
 	
 	@Override
@@ -41,27 +42,24 @@ public class EntityPlayer extends Entity
 		if(this.keyAction)
 			if(!this.pspace)
 			{
-				boolean gift = false;
-				for(Entity entity : this.world.entities)
-					if(entity instanceof EntityKid
-						&& (entity.x-this.x)*(entity.x-this.x)+(entity.y-this.y)*(entity.y-this.y) < 3*3
-						&& this.hasGift)
-					{
-						EntityKid kid = (EntityKid)entity;
-						if(kid.hasGift)
+				if(this.hasChild && this.hasGift)
+				{
+					for(Entity entity : this.world.entities)
+						if(entity instanceof EntityKid)
 						{
-							Game.instance.setCurrentGui(new GuiGameOver(null, 0, 0, Game.instance.getWidth(), Game.instance.getHeight(), false, this.world.lifetime));
+							EntityKid kid = (EntityKid)entity;
+							if(kid.looking)
+								if(kid.hasGift)
+									Game.instance.setCurrentGui(new GuiGameOver(null, 0, 0, Game.instance.getWidth(), Game.instance.getHeight(), false, this.world.lifetime));
+								else
+								{
+									this.gifts++;
+									kid.hasGift = true;
+									this.hasGift = false;
+								}
 						}
-						else
-						{
-							this.gifts++;
-							kid.hasGift = true;
-							this.hasGift = false;
-							gift = true;
-						}
-					}
-				
-				if(!gift)
+				}
+				else
 				{
 					int tx = this.x+Direction.getDeltaX(this.dir);
 					int ty = this.y+Direction.getDeltaY(this.dir);

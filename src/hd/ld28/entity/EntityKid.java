@@ -13,7 +13,7 @@ public class EntityKid extends Entity
 {
 	public int[] path;
 	public int pathprogress, texture, dir;
-	public boolean hasGift;
+	public boolean hasGift, looking;
 	
 	public EntityKid(World world, int x, int y, int id)
 	{
@@ -25,6 +25,29 @@ public class EntityKid extends Entity
 		this.hasGift = false;
 		this.mapcolor = Color.green.getRGB();
 		this.dir = Direction.UP;
+		this.looking = false;
+	}
+	
+	public void move()
+	{
+		if(this.pathprogress >= this.path.length)
+		{
+			int x = this.x+this.world.random.nextInt(32)-16;
+			int y = this.y+this.world.random.nextInt(32)-16;
+			if(0 <= x && x < this.world.SIZE && 0 <= y && y < this.world.SIZE && this.world.getTileAt(x, y).isWalkable())
+			{
+				this.path = PathFinding.findPath(this.world, this.x, this.y, x, y);
+				this.pathprogress = 0;
+			}
+		}
+		else
+		{
+			this.dir = this.path[this.pathprogress];
+			this.nx += Direction.getDeltaX(this.dir);
+			this.ny += Direction.getDeltaY(this.dir);
+			this.moveTime = (int)(this.maxMoveTime/this.world.getTileAt(this.x, this.y).getWalkSpeed());
+			this.pathprogress++;
+		}
 	}
 	
 	@Override
@@ -37,26 +60,24 @@ public class EntityKid extends Entity
 			this.x = this.nx;
 			this.y = this.ny;
 			
+			
 			if((this.world.player.x-this.x)*(this.world.player.x-this.x)+(this.world.player.y-this.y)*(this.world.player.y-this.y) > 3*3)
 			{
-				if(this.pathprogress >= this.path.length)
+				if(this.looking)
 				{
-					int x = this.x+this.world.random.nextInt(32)-16;
-					int y = this.y+this.world.random.nextInt(32)-16;
-					if(0 <= x && x < this.world.SIZE && 0 <= y && y < this.world.SIZE && this.world.getTileAt(x, y).isWalkable())
-					{
-						this.path = PathFinding.findPath(this.world, this.x, this.y, x, y);
-						this.pathprogress = 0;
-					}
+					this.world.player.hasChild = false;
+					this.looking = false;
 				}
-				else
-				{
-					this.dir = this.path[this.pathprogress];
-					this.nx += Direction.getDeltaX(this.dir);
-					this.ny += Direction.getDeltaY(this.dir);
-					this.moveTime = (int)(this.maxMoveTime/this.world.getTileAt(this.x, this.y).getWalkSpeed());
-					this.pathprogress++;
-				}
+				this.move();
+			}
+			else if(!this.world.player.hasChild)
+			{
+				this.world.player.hasChild = true;
+				this.looking = true;
+			}
+			else if(!this.looking)
+			{
+				this.move();
 			}
 		}
 	}
