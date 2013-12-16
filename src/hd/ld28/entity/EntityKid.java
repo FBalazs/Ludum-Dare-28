@@ -34,7 +34,7 @@ public class EntityKid extends Entity
 		{
 			int x = this.x+this.world.random.nextInt(32)-16;
 			int y = this.y+this.world.random.nextInt(32)-16;
-			if(0 <= x && x < this.world.SIZE && 0 <= y && y < this.world.SIZE && this.world.getTileAt(x, y).isWalkable())
+			if(0 <= x && x < World.SIZE && 0 <= y && y < World.SIZE && this.world.getTileAt(x, y).isWalkable())
 			{
 				this.path = PathFinding.findPath(this.world, this.x, this.y, x, y);
 				this.pathprogress = 0;

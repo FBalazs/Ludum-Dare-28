@@ -31,7 +31,7 @@ public class WorldRenderer
 		int ry = Game.instance.applet.getHeight()/this.world.TILE_SIZE/2;
 		for(int i = this.world.player.x-rx-1; i <= this.world.player.x+rx+1; i++)
 			for(int j = this.world.player.y-ry-1; j <= this.world.player.y+ry+1; j++)
-				if(0 <= i && i < this.world.SIZE && 0 <= j && j < this.world.SIZE)
+				if(0 <= i && i < World.SIZE && 0 <= j && j < World.SIZE)
 					Tile.tiles.get(this.world.getTileIdAt(i, j)).renderAt(this, this.world, partialTick, i, j);
 		
 		for(Entity entity : this.world.entities)

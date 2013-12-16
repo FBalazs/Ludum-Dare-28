@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning;
 	public Gui currentGui;
 	
-	public final int requestedUPS = 25;
+	public final int requestedUPS = 20;
 	public float partialTick;
 	public int ups, rps;
 	private int cups, crps;
@@ -167,7 +167,7 @@ public class Game extends Canvas implements Runnable
 			if(0 <= entity.x-mx && entity.x-mx < 128 && 0 <= entity.y-my && entity.y-my < 128)
 			{
 				g.setColor(new Color(entity.mapcolor));
-				g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 1, 1);
+				g.fillRect(this.getWidth()-128-32+entity.x-mx, this.getHeight()-128-32+entity.y-my, 2, 2);
 			}
 		g.setColor(Color.red);
 		g.fillRect(this.getWidth()-128-32+this.world.player.x-mx-1, this.getHeight()-128-32+this.world.player.y-my-1, 3, 3);
@@ -200,7 +200,11 @@ public class Game extends Canvas implements Runnable
 		RenderingHelper.fillTexturedRect(g, this.getWidth()-128-64, this.getHeight()-128-64, 32, 32, Texture.BORDER[0]);
 		RenderingHelper.fillTexturedRect(g, this.getWidth()-128-64, this.getHeight()-32, 32, 32, Texture.BORDER[3]);
 		RenderingHelper.fillTexturedRect(g, this.getWidth()-32, this.getHeight()-128-64, 32, 32, Texture.BORDER[1]);
-
+		
+		g.setColor(Color.white);
+		g.setFont(new Font("SansSerif", Font.BOLD, 20));
+		g.drawString("UPS: "+this.ups+" RPS: "+this.rps, 48, 24);
+		
 		if(this.isRunning)
 		{
 			if(this.getBufferStrategy() == null)

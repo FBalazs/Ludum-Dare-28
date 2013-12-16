@@ -2,6 +2,7 @@ package hd.ld28.gui;
 
 import hd.ld28.Game;
 import hd.ld28.render.RenderingHelper;
+import hd.ld28.world.World;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,7 +27,7 @@ public class GuiGameOver extends Gui
 	{
 		this.subs.clear();
 		
-		this.btnBack = new GuiButton(this, this.width/2-86, this.height*9/10-23, 86*2, 23*2, "Ok");
+		this.btnBack = new GuiButton(this, this.width/2-86, this.height*9/10-23, 86*2, 23*2, this.win ? "Next" : "Retry");
 		
 		this.subs.add(this.btnBack);
 		
@@ -46,7 +47,12 @@ public class GuiGameOver extends Gui
 			this.c = Game.instance.random.nextInt();
 		
 		if(this.btnBack.wasClicked())
-			Game.instance.setCurrentGui(new GuiMainMenu(null, this.x, this.y, this.width, this.height));
+		{
+			if(this.win)
+				World.SIZE *= 2;
+			Game.instance.world = new World();
+			Game.instance.setCurrentGui(null);
+		}
 		
 		super.update(mouseX, mouseY, pressed);
 	}

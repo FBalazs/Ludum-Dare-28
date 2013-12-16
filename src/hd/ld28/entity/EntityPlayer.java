@@ -63,7 +63,7 @@ public class EntityPlayer extends Entity
 				{
 					int tx = this.x+Direction.getDeltaX(this.dir);
 					int ty = this.y+Direction.getDeltaY(this.dir);
-					if(0 <= tx && tx < this.world.SIZE && 0 <= ty && ty < this.world.SIZE)
+					if(0 <= tx && tx < World.SIZE && 0 <= ty && ty < World.SIZE)
 						if(this.world.getTileIdAt(tx, ty) == Tile.LEAVES)
 							this.world.setTileIdAt(tx, ty, Tile.GRASS);
 						else if(this.world.getTileIdAt(tx, ty) == Tile.TREE)
@@ -82,11 +82,11 @@ public class EntityPlayer extends Entity
 			
 			if(this.keyUp && this.ny > 0 && this.world.getTileAt(this.x, this.y-1).isWalkable() && this.world.getTileAt(this.nx, this.ny-1).isWalkable())
 				this.ny--;
-			if(this.keyDown && this.ny < this.world.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
+			if(this.keyDown && this.ny < World.SIZE-1 && this.world.getTileAt(this.x, this.y+1).isWalkable() && this.world.getTileAt(this.nx, this.ny+1).isWalkable())
 				this.ny++;
 			if(this.keyLeft && this.nx > 0 && this.world.getTileAt(this.x-1, this.y).isWalkable() && this.world.getTileAt(this.nx-1, this.ny).isWalkable())
 				this.nx--;
-			if(this.keyRight && this.nx < this.world.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
+			if(this.keyRight && this.nx < World.SIZE-1 && this.world.getTileAt(this.x+1, this.y).isWalkable() && this.world.getTileAt(this.nx+1, this.ny).isWalkable())
 				this.nx++;
 			
 			/*System.out.println(Game.instance.input.isKeyDown(KeyEvent.VK_W)+" "

@@ -29,7 +29,7 @@ public class GuiMainMenu extends Gui
 		this.btnResume = new GuiButton(this, this.width/2-86, this.height/2-23 - 30, 86*2, 23*2, "Resume");
 		this.btnResume.isFocused = true;
 		
-		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23 + 30, 86*2, 23*2, "New Game");
+		this.btnNewGame = new GuiButton(this, this.width/2-86, this.height/2-23 + 30, 86*2, 23*2, "Retry");
 
 		this.btnInstruction = new GuiButton(this, this.width/2-86, this.height/2-23 + 90, 86*2, 23*2, "Instructions");
 

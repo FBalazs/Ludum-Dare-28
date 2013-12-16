@@ -48,28 +48,28 @@ public class PathFinding
 				for(int j = 0; j < h; j++)
 					if(pstates[i][j].s == 1)
 					{
-						if(i < w-1 && 0 <= i+x+1 && i+x+1 < world.SIZE && 0 <= j+y && j+y < world.SIZE && world.getTileAt(x+i+1, y+j).isWalkable() && states[i+1][j].s == 0)
+						if(i < w-1 && 0 <= i+x+1 && i+x+1 < World.SIZE && 0 <= j+y && j+y < World.SIZE && world.getTileAt(x+i+1, y+j).isWalkable() && states[i+1][j].s == 0)
 						{
 							states[i+1][j].s = 1;
 							states[i+1][j].px = i;
 							states[i+1][j].py = j;
 							end = false;
 						}
-						if(i > 0 && 0 <= i+x-1 && i+x-1 < world.SIZE && 0 <= j+y && j+y < world.SIZE && world.getTileAt(x+i-1, y+j).isWalkable() && states[i-1][j].s == 0)
+						if(i > 0 && 0 <= i+x-1 && i+x-1 < World.SIZE && 0 <= j+y && j+y < World.SIZE && world.getTileAt(x+i-1, y+j).isWalkable() && states[i-1][j].s == 0)
 						{
 							states[i-1][j].s = 1;
 							states[i-1][j].px = i;
 							states[i-1][j].py = j;
 							end = false;
 						}
-						if(j < h-1 && 0 <= i+x && i+x < world.SIZE && 0 <= j+y+1 && j+y+1 < world.SIZE && world.getTileAt(x+i, y+j+1).isWalkable() && states[i][j+1].s == 0)
+						if(j < h-1 && 0 <= i+x && i+x < World.SIZE && 0 <= j+y+1 && j+y+1 < World.SIZE && world.getTileAt(x+i, y+j+1).isWalkable() && states[i][j+1].s == 0)
 						{
 							states[i][j+1].s = 1;
 							states[i][j+1].px = i;
 							states[i][j+1].py = j;
 							end = false;
 						}
-						if(j > 0 && 0 <= i+x && i+x < world.SIZE && 0 <= j+y-1 && j+y-1 < world.SIZE && world.getTileAt(x+i, y+j-1).isWalkable() && states[i][j-1].s == 0)
+						if(j > 0 && 0 <= i+x && i+x < World.SIZE && 0 <= j+y-1 && j+y-1 < World.SIZE && world.getTileAt(x+i, y+j-1).isWalkable() && states[i][j-1].s == 0)
 						{
 							states[i][j-1].s = 1;
 							states[i][j-1].px = i;
