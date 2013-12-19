@@ -74,7 +74,7 @@ public class GuiGameOver extends Gui
 			g.setColor(Color.red);
 			g.setFont(new Font("SansSerif", Font.BOLD, 20));
 			RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "You lost the game, after "+this.time+" sec!");
-			RenderingHelper.drawCenteredString(g, this.width/2, this.height/2, "YOU ONLY GOT ONE present for each children!");
+			RenderingHelper.drawCenteredString(g, this.width/2, this.height/2 + 30, "YOU ONLY GOT ONE present for each children!");
 		}
 		
 		super.render(g);
